@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Dominic Saksa Mind Map</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-
-  </head>
-  <body>
-    <header>
-      <h1>Welcome to my mind</h1>
+<head>
+  <meta charset="utf-8" />
+  <title>Dominic Saksa Mind Map</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+</head>
+<body>
+  <div class="layout">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <h1>Dominic Saksa</h1>
+      <nav class="top-links">
+        <a href="mailto:your.email@example.com" target="_blank" rel="noopener noreferrer">Email Me</a>
+        <a href="https://your-project-page.com" target="_blank" rel="noopener noreferrer">Project Page</a>
+        <a href="files/Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </nav>
     </header>
 
-    <main>
-      <div id="container3D"></div>
-      <!-- Info panel for clicked models -->
-      <div id="infoPanel" style="
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        width: 600px;
-        max-width: 600px;
-        padding: 15px;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        border-radius: 8px;
-        display: none;
-        z-index: 100;
-        ">
-        <h2 id="infoTitle"></h2>
-        <p id="infoDescription"></p>
-        <button id="closeInfo" style="
-          margin-top: 10px;
-          padding: 6px 12px;
-          background: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        ">Close</button>
-      </div>
-    </main>
+    <div class="main">
+      <!-- Left Column -->
+      <aside class="sidebar left">
+        
+      </aside>
 
-    <script type="module" src="js/main.js"></script>
-  </body>
+      <!-- Center 3D Canvas -->
+      <div class="center">
+        <div id="container3D"></div>
+
+        <!-- Info Panel -->
+        <div id="infoPanel">
+          <h2 id="infoTitle"></h2>
+          <p id="infoDescription"></p>
+          <button id="closeInfo">Close</button>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <aside class="sidebar right">
+        <!-- Add content here too -->
+      </aside>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
 </html>

@@ -7,7 +7,8 @@ import { MeshToonMaterial } from "https://cdn.skypack.dev/three@0.129.0";
 // Create scene and camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(10, 10, 25);
+camera.position.set(120, 70, -120); // Example: higher and more centered view
+
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -27,9 +28,12 @@ const mouse = new THREE.Vector2();
 const clickableObjects = [];
 const meshToModelMap = new Map();  // key: mesh, value: modelName
 
+let originalCameraPos = camera.position.clone();
+let originalControlsTarget = controls.target.clone();
+
 
 // Lighting Setup
-const keyLight = new THREE.DirectionalLight(0xffddaa, 1.4);
+const keyLight = new THREE.DirectionalLight(0xffddaa, 1);
 keyLight.position.set(50, 100, 100);
 keyLight.castShadow = true;
 scene.add(keyLight);
@@ -46,12 +50,6 @@ keyLight.shadow.camera.top = 100;
 keyLight.shadow.camera.bottom = -100;
 
 keyLight.shadow.bias = -0.0005;
-
-
-// Optionally visualize the shadow camera box
-// const helper = new THREE.CameraHelper(keyLight.shadow.camera);
-// scene.add(helper);
-
 
 const rimLight = new THREE.DirectionalLight(0xccddff, 1.0);
 rimLight.position.set(-50, 80, -100);
@@ -169,35 +167,44 @@ function onMouseMove(event) {
 // Function to load models
 const loadedModels = new Map(); // modelName → modelGroup
 
-function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755, scale = 1) {
-  const loader = new GLTFLoader();
-  loader.load(
-    `./models/${modelName}/scene.gltf`,
-    (gltf) => {
-      const model = gltf.scene;
-      model.position.set(position.x, position.y, position.z);
-      model.scale.set(scale, scale, scale);
+  function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755, scale = 1) {
+    const loader = new GLTFLoader();
+    loader.load(
+      `./models/${modelName}/scene.gltf`,
+      (gltf) => {
+        const model = gltf.scene;
+        model.position.set(position.x, position.y, position.z);
+        model.scale.set(scale, scale, scale);
 
-      model.traverse((node) => {
-        if (node.isMesh) {
-          node.material = new MeshToonMaterial({ color });
-          node.castShadow = true;
-          node.receiveShadow = true;
-
-          clickableObjects.push(node);
-          meshToModelMap.set(node, modelName);
+        // 🔁 Rotate Arcade model 90 degrees around Y
+        if (modelName === 'Arcade') {
+          model.rotation.y = Math.PI / 2;
         }
-      });
+        if (modelName === 'School') {
+          model.rotation.y = Math.PI *3 / 2;
+        }
 
-      scene.add(model);
-      loadedModels.set(modelName, model);  // Save the whole model group
-    },
-    undefined,
-    (error) => {
-      console.error(`Error loading ${modelName}:`, error);
-    }
-  );
-}
+        model.traverse((node) => {
+          if (node.isMesh) {
+            node.material = new MeshToonMaterial({ color });
+            node.castShadow = true;
+            node.receiveShadow = true;
+
+            clickableObjects.push(node);
+            meshToModelMap.set(node, modelName);
+          }
+        });
+
+        scene.add(model);
+        loadedModels.set(modelName, model);  // Save the whole model group
+      },
+      undefined,
+      (error) => {
+        console.error(`Error loading ${modelName}:`, error);
+      }
+    );
+  }
+
 
 function zoomToModel(modelName) {
   const model = loadedModels.get(modelName);
@@ -206,38 +213,45 @@ function zoomToModel(modelName) {
     return;
   }
 
-  // Compute bounding box of the entire model
+  // Compute bounding box and center
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
 
-  // How far should the camera be?
+  // Calculate the max size (to fit)
   const maxSize = Math.max(size.x, size.y, size.z);
-  const fitHeightDistance = maxSize / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)));
-  const fitWidthDistance = fitHeightDistance / camera.aspect;
-  const distance = Math.max(fitHeightDistance, fitWidthDistance);
 
-  // New camera position (along the vector from target to camera, but at the right distance)
-  // Let's place the camera on a direction that looks from front and slightly above:
-  const direction = new THREE.Vector3(0, 0, 1); // camera looking along -Z by default, so +Z is behind the model
-  const newPosition = center.clone().add(direction.multiplyScalar(distance * 1.2)); // 1.2 = some padding
+  // Get current camera forward direction (normalized)
+  const cameraDirection = new THREE.Vector3();
+  camera.getWorldDirection(cameraDirection);
 
-  // Animate the camera and controls target to the new position smoothly
+  // Calculate the distance the camera should be from center to fit the object
+  // Use camera's FOV and aspect ratio:
+  const fov = THREE.MathUtils.degToRad(camera.fov);
+  const aspect = camera.aspect;
 
-  // Simple tween-like animation using requestAnimationFrame
-  const duration = 1000; // ms
+  // Distance required to fit object height in view:
+  const distanceForHeight = maxSize / (2 * Math.tan(fov / 2));
+  // Distance required to fit object width in view:
+  const distanceForWidth = distanceForHeight / aspect;
+  // Use the larger distance
+  const requiredDistance = Math.max(distanceForHeight, distanceForWidth);
+
+  // Calculate new camera position along its forward vector
+  // We'll move camera to: center - cameraDirection * requiredDistance
+  const newCameraPosition = center.clone().add(cameraDirection.clone().multiplyScalar(-requiredDistance));
+
+  // Animate camera position (no rotation or controls.target change)
+  const duration = 1000;
   const startTime = performance.now();
 
   const startPos = camera.position.clone();
-  const startTarget = controls.target.clone();
 
   function animateCamera(time) {
     const elapsed = time - startTime;
-    const t = Math.min(elapsed / duration, 1); // normalize 0..1
+    const t = Math.min(elapsed / duration, 1);
 
-    // Interpolate position and target
-    camera.position.lerpVectors(startPos, newPosition, t);
-    controls.target.lerpVectors(startTarget, center, t);
+    camera.position.lerpVectors(startPos, newCameraPosition, t);
     controls.update();
 
     if (t < 1) {
@@ -248,10 +262,37 @@ function zoomToModel(modelName) {
   requestAnimationFrame(animateCamera);
 }
 
+
+function resetCamera() {
+  const duration = 1000;
+  const startTime = performance.now();
+  const startPos = camera.position.clone();
+  const startTarget = controls.target.clone();
+
+  function animateReset(time) {
+    const elapsed = time - startTime;
+    const t = Math.min(elapsed / duration, 1);
+
+    camera.position.lerpVectors(startPos, originalCameraPos, t);
+    controls.target.lerpVectors(startTarget, originalControlsTarget, t);
+    controls.update();
+
+    if (t < 1) {
+      requestAnimationFrame(animateReset);
+    }
+  }
+
+  requestAnimationFrame(animateReset);
+}
+
+
+
 // Models to load
 const modelsToLoad = [
-  { name: 'Office', position: { x: 0, y: -1, z: 0 }, color: 0xff7755, scale: 1 },
-  { name: 'Computer', position: { x: 0, y: -1, z: -10 }, color: 0x5588ff, scale: .5 },
+  { name: 'Office', position: { x: 0, y: -1, z: 0 }, color: 0x8c5b11, scale: 2.7 },
+  { name: 'Computer', position: { x: 0, y: -1, z: -30 }, color: 0x8c5b11, scale: 1.7 },
+  { name: 'Arcade', position: { x: 17 , y: -1.5, z: -5 }, color: 0x8c5b11, scale: 3.4 },
+  { name: 'School', position: { x: 20 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
 ];
 
 // Load all models
@@ -303,6 +344,11 @@ function onClick(event) {
 
 document.getElementById('closeInfo').addEventListener('click', () => {
   document.getElementById('infoPanel').style.display = 'none';
+});
+
+document.getElementById('closeInfo').addEventListener('click', () => {
+  document.getElementById('infoPanel').style.display = 'none';
+  resetCamera(); // 👈 Go back to original view
 });
 
 

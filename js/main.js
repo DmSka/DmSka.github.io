@@ -68,24 +68,29 @@ ground.position.y = -1;
 ground.receiveShadow = true;
 scene.add(ground);
 
-const modelInfo = {
-  'Office': {
-    title: "",
-    description: `
-      <h1>Work Experience</h1>
-      <h2>Junior Developer</h2>
-      <h3>BIWorldwide Detroit</h3>
-      <p>Constructed and deployed HTML emails. Used VS Code IDE to program and populate emails for Metro-Detroit car dealerships employee incentive.</p>
-    `
-  },
-  'Computer': {
-    title: "Computer Model",
-    description: `
-      
-    `
-  },
-  // add more models as needed
-};
+
+
+function loadModelInfoFromHTML() {
+  const container = document.getElementById('modelData');
+  if (!container) return {};
+
+  const info = {};
+  const modelDivs = container.children;
+
+  for (let i = 0; i < modelDivs.length; i++) {
+    const div = modelDivs[i];
+    const id = div.id;
+    const title = div.dataset.title || id;
+    const description = div.innerHTML;
+    info[id] = { title, description };
+  }
+
+  return info;
+}
+
+// Load all model info once on app start:
+const modelInfo = loadModelInfoFromHTML();
+
 
 let currentHovered = null;
 
@@ -100,6 +105,12 @@ function onMouseMove(event) {
 
   if (intersects.length > 0) {
     const hoveredMesh = intersects[0].object;
+
+    label.style.display = 'block';
+    label.textContent = modelInfo[meshToModelMap.get(hoveredMesh)]?.title || 'Unknown';
+
+    label.style.left = `${event.clientX + 10}px`;
+    label.style.top = `${event.clientY + 10}px`;
 
     if (currentHovered !== hoveredMesh) {
       if (currentHovered) {
@@ -144,6 +155,7 @@ function onMouseMove(event) {
 
     document.body.style.cursor = 'pointer';
   } else {
+    label.style.display = 'none';
     // Reset color if nothing is hovered
     if (currentHovered) {
       gsap.to(currentHovered.material.color, {
@@ -205,6 +217,33 @@ const loadedModels = new Map(); // modelName → modelGroup
     );
   }
 
+function handleModelSelection(modelName) {
+  console.log(`Model selected: ${modelName}`);
+
+  // Zoom to model
+  zoomToModel(modelName);
+
+  // Show info panel and load content
+  const infoPanel = document.getElementById('infoPanel');
+  const desc = document.getElementById('infoDescription');
+
+  if (modelInfo[modelName]) {
+    desc.innerHTML = modelInfo[modelName].description;
+  } else {
+    desc.textContent = "No description available.";
+  }
+
+  infoPanel.style.display = 'block';
+
+  // Highlight the active nav link:
+  document.querySelectorAll('#infoNav a').forEach(link => {
+    if (link.getAttribute('data-model') === modelName) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
 
 function zoomToModel(modelName) {
   const model = loadedModels.get(modelName);
@@ -308,6 +347,7 @@ window.addEventListener("resize", () => {
 });
 
 window.addEventListener('click', onClick, false);
+const label = document.getElementById('hoverLabel');
 
 function onClick(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -319,28 +359,10 @@ function onClick(event) {
   if (intersects.length > 0) {
     const clickedMesh = intersects[0].object;
     const modelName = meshToModelMap.get(clickedMesh);
-    console.log(`Clicked mesh belongs to model: ${modelName}`);
-
-    // Zoom camera
-    zoomToModel(modelName);
-
-    // Show info panel
-    const infoPanel = document.getElementById('infoPanel');
-    const title = document.getElementById('infoTitle');
-    const desc = document.getElementById('infoDescription');
-
-    if (modelInfo[modelName]) {
-      title.textContent = modelInfo[modelName].title;
-      desc.innerHTML = modelInfo[modelName].description;
-
-    } else {
-      title.textContent = modelName;
-      desc.textContent = "No description available.";
-    }
-
-    infoPanel.style.display = 'block';
+    handleModelSelection(modelName);
   }
 }
+
 
 document.getElementById('closeInfo').addEventListener('click', () => {
   document.getElementById('infoPanel').style.display = 'none';
@@ -351,6 +373,39 @@ document.getElementById('closeInfo').addEventListener('click', () => {
   resetCamera(); // 👈 Go back to original view
 });
 
+document.querySelectorAll('#infoNav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modelName = link.getAttribute('data-model');
+    handleModelSelection(modelName);
+  });
+});
+
+const navLinks = document.querySelectorAll('#infoNav a');
+const sections = Array.from(document.querySelectorAll('#infoDescription section'));
+
+function updateActiveLink() {
+  let currentSection = sections[0];
+
+  for (const section of sections) {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 150 && rect.bottom >= 150) {
+      currentSection = section;
+      break;
+    }
+  }
+
+  navLinks.forEach(link => {
+    const modelName = link.getAttribute('data-model');
+    if (modelName === currentSection.id) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+document.getElementById('infoDescription').addEventListener('scroll', updateActiveLink);
 
 // Animate and render loop
 function animate() {

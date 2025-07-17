@@ -1,4 +1,6 @@
 /* General Reset */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 :root {
   --dark-color:   #000022;
   --green-color:  #3A4F41;
@@ -16,11 +18,19 @@
 html, body {
   height: 100%;
   width: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Arvo', 'Oswald', sans-serif;
   background: var(--white-color);
   color: var(--green-color);
   overflow: hidden;
 }
+
+  body {
+    font-family: 'Arvo', serif;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Montserrat', sans-serif;
+  }
 
 /* Layout Container */
 .layout {
@@ -97,20 +107,22 @@ html, body {
 
 /* Info Panel Styling */
 #infoPanel {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 600px;
-  max-width: 90%;
+  position: fixed;
+  top: 0;
+  left: 0; /* Cover from the far left */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   padding: 15px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.9); /* Optional: make it a bit darker for full-screen effect */
   color: white;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 0; /* No rounded edges for full screen */
   display: none;
   z-index: 100;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: none; /* Shadow not necessary if full screen, optional */
+  overflow-y: auto; /* Scroll if content too tall */
 }
+
 
 #infoPanel h2 {
   margin-bottom: 10px;
@@ -121,11 +133,175 @@ html, body {
 }
 
 #closeInfo {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: #fff;
-  color: #000;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 30px;
+  right: 30px;
+  background: white;
   border: none;
-  border-radius: 4px;
+  font-size: 28px;
+  color: black;
   cursor: pointer;
+  z-index: 101; /* Ensure it's above content */
+  border-radius: 25px;
+  transition: color 0.2s ease;
+}
+
+#closeInfo:hover {
+  color: #f00;
+}
+
+.scroll-box::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.scroll-box::-webkit-scrollbar-track {
+  background: gray
+}
+ 
+/* Handle */
+.scroll-box::-webkit-scrollbar-thumb {
+  background: var(--orange-color);
+}
+
+/* Handle on hover */
+.scroll-box::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#hoverLabel {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.137);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family:  'Arvo', 'Oswald', sans-serif;
+  font-size: 25pt;
+  pointer-events: none;
+  z-index: 200;
+  transition: opacity 0.2s ease;
+}
+
+  #education-section {
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .education-container {
+    display: flex;
+    flex: 1;
+    gap: 40px;
+  }
+
+ .html-box {
+    background-color: #1e1e1e;
+    border-left: 5px solid var(--orange-color);
+    padding: 20px 25px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--white-color);
+    font-family: 'Arvo', 'Oswald', sans-serif;
+    margin-bottom: 1rem;
+  }
+
+  .html-box h3 {
+    margin-top: 0;
+    font-size: 1.6rem;
+    color: var(--green-color);
+    font-style: italic;
+    border-bottom: 1px solid var(--green-color);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  .html-box p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+  }
+
+  .html-box em {
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .columns {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  .column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 768px) {
+    .columns {
+      flex-direction: column;
+    }
+  }
+
+.slide-in-left {
+  animation: slideInFromLeft 0.8s ease-out forwards;
+}
+
+.slide-in-right {
+  animation: slideInFromRight 0.8s ease-out forwards;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#infoNav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 10px 0;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+#infoNav a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+#infoNav a:hover {
+  color: var(--orange-color); /* light green or any hover color you prefer */
+}
+
+#infoNav a.active {
+  color: var(--yellow-color);
+  font-weight: bold;
+  text-decoration: underline;
 }

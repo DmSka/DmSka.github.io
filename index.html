@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>Dominic Saksa Mind Map</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Oswald&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
 </head>
 <body>
@@ -12,13 +13,17 @@
     <header class="top-bar">
       <h1>Dominic Saksa</h1>
       <nav class="top-links">
-        <a href="mailto:your.email@example.com" target="_blank" rel="noopener noreferrer">Email Me</a>
+        <a href="mailto:domsaksa5@gmail.com" target="_blank" rel="noopener noreferrer">Email Me</a>
         <a href="https://your-project-page.com" target="_blank" rel="noopener noreferrer">Project Page</a>
         <a href="files/Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </header>
 
+
     <div class="main">
+      <div id="hoverLabel" style="display: none;"></div>
+
+     
       <!-- Left Column -->
       <aside class="sidebar left">
         
@@ -30,9 +35,14 @@
 
         <!-- Info Panel -->
         <div id="infoPanel">
-          <h2 id="infoTitle"></h2>
+          <nav id="infoNav">
+            <a href="#" data-model="School">Education</a>
+            <a href="#" data-model="Arcade">Game Development</a>
+            <a href="#" data-model="Office">Work Experience</a>
+            <a href="#" data-model="Computer">Programming Projects</a>
+          </nav>  
           <p id="infoDescription"></p>
-          <button id="closeInfo">Close</button>
+          <button id="closeInfo">X</button>
         </div>
       </div>
 
@@ -44,5 +54,74 @@
   </div>
 
   <script type="module" src="js/main.js"></script>
+
+  <div id="modelData" style="display: none;">
+    <div id="Office" data-title="Work Experience">
+      <h2>Junior Developer</h2>
+      <h3>BIWorldwide Detroit</h3>
+
+    </div>
+
+    <div id="Computer" data-title="Programming Projects">
+      <h2>DisneyWorldle</h2>
+      <h3>Worldle inspired game</h3>
+      <p>Used HTML, CSS, JS. Programmed in VS Code.</p>
+    </div>
+
+    <div id="Arcade" data-title="Game Development">
+      <h2>Unity Projects</h2>
+      <ul>
+        <li>test</li>
+      </ul>
+    </div>
+
+    <div id="School" data-title="">
+      <section id="education-section" style="max-width: 90%; margin: 3rem auto; color: #eee; font-family: 'Poppins', sans-serif; padding-bottom: 0pt;">
+        <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+          <!-- Left Column -->
+          <div class="column" style="padding-top: 0pt;">
+            <div class="html-box" style="width: 100%; flex: 1; animation: slideInFromLeft 0.8s ease-out forwards; opacity: 0;">
+              <h1 style="font-size: 30pt;">Education</h1>
+              <h1 style="font-style: italic;">Michigan State University</h1>
+              <p>East Lansing, Michigan</p>
+              <br>
+              <h2>Bachelor of Science in Computer Engineering</h2>
+              <p>Expected Graduation: May 2027</p>
+            </div>
+            <div class="html-box" style="width: 100%; flex: 1; animation: slideInFromLeft 0.8s ease-out forwards; animation-delay: .3s; opacity: 0;" >
+              <h1>Completed Courses</h1>
+              <div class="scroll-box" style="max-height: 90%; overflow-y: auto; padding-right: 10px;">
+                <ul style="padding-left: 20pt; margin: 0;">
+                  <li>CSE 231: Intro to Programming I</li>
+                  <li>CSE 232: Intro to Programming II</li>
+                  <li>CSE 260: Discrete Structures in Computer Science</li>
+                  <li>CSE 331: Algorithms and Data Structures</li>
+                  <br>
+                  
+                  <li>ECE 201: Circuits and Systems I</li>
+                  <li>ECE 202: Circuits and Systems II</li>
+                  <li>ECE 230: Digital Logic Fundamentals</li>
+                  <li>ECE 280: Electrical Engineering Analysis</li>
+                  <li>ECE 302: Electronic Circuits and Systems</li>
+                  <br>
+                  <li>MTH 132: Calculus I</li>
+                  <li>MTH 133: Calculus II</li>
+                  <li>MTH 234: Multivariable Calculus</li>
+                  <li>MTH 235: Differential Equations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="column" style="padding-top: 0pt;">
+            <img src="images/beaumont-tower-2021.png" alt="My Photo" width="100%" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); animation: slideInFromRight 0.8s ease-out forwards; opacity: 0;">
+            <img src="images/msu-sign_edited.jpg" alt="My Photo" width="100%" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); animation: slideInFromRight 0.8s ease-out forwards; animation-delay: .3s; opacity: 0;">
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
 </body>
 </html>

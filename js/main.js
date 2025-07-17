@@ -69,10 +69,11 @@ scene.add(ground);
 
 // Models to load
 const modelsToLoad = [
-  { name: 'Office', position: { x: 0, y: -1, z: 0 }, color: 0x8c5b11, scale: 2.7 },
-  { name: 'Computer', position: { x: 0, y: -1, z: -30 }, color: 0x8c5b11, scale: 1.7 },
-  { name: 'Arcade', position: { x: 17 , y: -1.5, z: -5 }, color: 0x8c5b11, scale: 3.4 },
+  { name: 'Office', position: { x: -10, y: -1, z: 17 }, color: 0x8c5b11, scale: 2.7 },
+  { name: 'Computer', position: { x: -19, y: -1, z: -5 }, color: 0x8c5b11, scale: 1.5 },
+  { name: 'Arcade', position: { x: 6 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: 3.4 },
   { name: 'School', position: { x: 20 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
+  { name: 'Park', position: { x: -15, y: -1, z: -33 }, color: 0x8c5b11, scale: 2.2 },
 ];
 
 // Load all models
@@ -275,21 +276,25 @@ function zoomToModel(modelName) {
   let newCameraTarget;
   switch (modelName) {
     case "Arcade":
-      newCameraPosition = new THREE.Vector3(55.09, 26.50, -46.87);
-      newCameraTarget = new THREE.Vector3(4.92, -2.77, 3.30);
+      newCameraPosition = new THREE.Vector3(40.30, 24.00, -19.71);
+      newCameraTarget = new THREE.Vector3(8.67, 5.55, 11.91);
       break;
     case "School":
-      newCameraPosition = new THREE.Vector3(83.37, 33.49, -41.25);
-      newCameraTarget = new THREE.Vector3(23.17, -2.76, 21.56);
+      newCameraPosition = new THREE.Vector3(80.93, 29.41, -32.02);
+      newCameraTarget = new THREE.Vector3(25.34, -3.02, 23.58);
       break;
       
     case "Computer":
-      newCameraPosition = new THREE.Vector3(46.61, 30.86, -79.55);
-      newCameraTarget = new THREE.Vector3(-15.00, -5.07, -17.95);
+      newCameraPosition = new THREE.Vector3(30.98, 30.30, -57.32);
+      newCameraTarget = new THREE.Vector3(-14.31, 3.88, -12.04);
       break;
     case "Office":
-      newCameraPosition = new THREE.Vector3(50.17, 29.27, -50.17 );
-      newCameraTarget = new THREE.Vector3(0.00, 0.00, 0.00);
+      newCameraPosition = new THREE.Vector3(35.14, 29.13, -29.87 );
+      newCameraTarget = new THREE.Vector3(0.10, 8.69, 5.17);
+      break;
+    case "Park":
+      newCameraPosition = new THREE.Vector3(37.64, 33.64, -86.90 );
+      newCameraTarget = new THREE.Vector3(-23.96, -2.29, -25.30);
       break;
     default:
       console.warn(`No camera position defined for model: ${modelName}`);
@@ -411,12 +416,15 @@ function updateActiveLink() {
 
 document.getElementById('infoDescription').addEventListener('scroll', updateActiveLink);
 
-// window.addEventListener('click', () => {
-//   const pos = camera.position;
-//   const tgt = controls.target;
-//   console.log(`Camera position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
-//   console.log(`Camera target: ${tgt.x.toFixed(2)}, ${tgt.y.toFixed(2)}, ${tgt.z.toFixed(2)}`);
-// });
+/*
+ window.addEventListener('click', () => {
+   const pos = camera.position;
+   const tgt = controls.target;
+   console.log(`Camera position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
+   console.log(`Camera target: ${tgt.x.toFixed(2)}, ${tgt.y.toFixed(2)}, ${tgt.z.toFixed(2)}`);
+
+});
+*/
 
 
 // Animate and render loop

@@ -9,7 +9,6 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(120, 70, -120); // Example: higher and more centered view
 
-
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -68,7 +67,18 @@ ground.position.y = -1;
 ground.receiveShadow = true;
 scene.add(ground);
 
+// Models to load
+const modelsToLoad = [
+  { name: 'Office', position: { x: 0, y: -1, z: 0 }, color: 0x8c5b11, scale: 2.7 },
+  { name: 'Computer', position: { x: 0, y: -1, z: -30 }, color: 0x8c5b11, scale: 1.7 },
+  { name: 'Arcade', position: { x: 17 , y: -1.5, z: -5 }, color: 0x8c5b11, scale: 3.4 },
+  { name: 'School', position: { x: 20 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
+];
 
+// Load all models
+modelsToLoad.forEach((model) => {
+  loadModel(model.name, model.position, model.color, model.scale);
+});
 
 function loadModelInfoFromHTML() {
   const container = document.getElementById('modelData');
@@ -91,12 +101,59 @@ function loadModelInfoFromHTML() {
 // Load all model info once on app start:
 const modelInfo = loadModelInfoFromHTML();
 
+function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755, scale = 1) {
+    const loader = new GLTFLoader();
+    loader.load(
+      `./models/${modelName}/scene.gltf`,
+      (gltf) => {
+        const model = gltf.scene;
+        model.position.set(position.x, position.y, position.z);
+        model.scale.set(scale, scale, scale);
 
+        // 🔁 Rotate Arcade model 90 degrees around Y
+        if (modelName === 'Arcade') {
+          model.rotation.y = Math.PI / 2;
+        }
+        if (modelName === 'School') {
+          model.rotation.y = Math.PI *3 / 2;
+        }
+
+        model.traverse((node) => {
+          if (node.isMesh) {
+            node.material = new MeshToonMaterial({ color });
+            node.castShadow = true;
+            node.receiveShadow = true;
+
+            clickableObjects.push(node);
+            meshToModelMap.set(node, modelName);
+          }
+        });
+
+        scene.add(model);
+        loadedModels.set(modelName, model);  // Save the whole model group
+      },
+      undefined,
+      (error) => {
+        console.error(`Error loading ${modelName}:`, error);
+      }
+    );
+}
+
+const loadedModels = new Map(); // modelName → modelGroup
+
+
+
+let currentlyClicked = null;
 let currentHovered = null;
 
 window.addEventListener('mousemove', onMouseMove, false);
 
 function onMouseMove(event) {
+  if (currentlyClicked == true)
+  {
+    return;
+  }
+
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -176,56 +233,18 @@ function onMouseMove(event) {
   }
 }
 
-// Function to load models
-const loadedModels = new Map(); // modelName → modelGroup
-
-  function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755, scale = 1) {
-    const loader = new GLTFLoader();
-    loader.load(
-      `./models/${modelName}/scene.gltf`,
-      (gltf) => {
-        const model = gltf.scene;
-        model.position.set(position.x, position.y, position.z);
-        model.scale.set(scale, scale, scale);
-
-        // 🔁 Rotate Arcade model 90 degrees around Y
-        if (modelName === 'Arcade') {
-          model.rotation.y = Math.PI / 2;
-        }
-        if (modelName === 'School') {
-          model.rotation.y = Math.PI *3 / 2;
-        }
-
-        model.traverse((node) => {
-          if (node.isMesh) {
-            node.material = new MeshToonMaterial({ color });
-            node.castShadow = true;
-            node.receiveShadow = true;
-
-            clickableObjects.push(node);
-            meshToModelMap.set(node, modelName);
-          }
-        });
-
-        scene.add(model);
-        loadedModels.set(modelName, model);  // Save the whole model group
-      },
-      undefined,
-      (error) => {
-        console.error(`Error loading ${modelName}:`, error);
-      }
-    );
-  }
-
 function handleModelSelection(modelName) {
   console.log(`Model selected: ${modelName}`);
-
+  
   // Zoom to model
   zoomToModel(modelName);
 
   // Show info panel and load content
   const infoPanel = document.getElementById('infoPanel');
+  controls.enabled = false;   // Disable orbit controls
+  currentlyClicked = true;
   const desc = document.getElementById('infoDescription');
+  document.getElementById('hoverLabel').style.display = 'none';
 
   if (modelInfo[modelName]) {
     desc.innerHTML = modelInfo[modelName].description;
@@ -252,38 +271,33 @@ function zoomToModel(modelName) {
     return;
   }
 
-  // Compute bounding box and center
-  const box = new THREE.Box3().setFromObject(model);
-  const size = box.getSize(new THREE.Vector3());
-  const center = box.getCenter(new THREE.Vector3());
+  let newCameraPosition;
+  let newCameraTarget;
+  switch (modelName) {
+    case "Arcade":
+      newCameraPosition = new THREE.Vector3(55.09, 26.50, -46.87);
+      newCameraTarget = new THREE.Vector3(4.92, -2.77, 3.30);
+      break;
+    case "School":
+      newCameraPosition = new THREE.Vector3(83.37, 33.49, -41.25);
+      newCameraTarget = new THREE.Vector3(23.17, -2.76, 21.56);
+      break;
+      
+    case "Computer":
+      newCameraPosition = new THREE.Vector3(46.61, 30.86, -79.55);
+      newCameraTarget = new THREE.Vector3(-15.00, -5.07, -17.95);
+      break;
+    case "Office":
+      newCameraPosition = new THREE.Vector3(50.17, 29.27, -50.17 );
+      newCameraTarget = new THREE.Vector3(0.00, 0.00, 0.00);
+      break;
+    default:
+      console.warn(`No camera position defined for model: ${modelName}`);
+      return;
+  }
 
-  // Calculate the max size (to fit)
-  const maxSize = Math.max(size.x, size.y, size.z);
-
-  // Get current camera forward direction (normalized)
-  const cameraDirection = new THREE.Vector3();
-  camera.getWorldDirection(cameraDirection);
-
-  // Calculate the distance the camera should be from center to fit the object
-  // Use camera's FOV and aspect ratio:
-  const fov = THREE.MathUtils.degToRad(camera.fov);
-  const aspect = camera.aspect;
-
-  // Distance required to fit object height in view:
-  const distanceForHeight = maxSize / (2 * Math.tan(fov / 2));
-  // Distance required to fit object width in view:
-  const distanceForWidth = distanceForHeight / aspect;
-  // Use the larger distance
-  const requiredDistance = Math.max(distanceForHeight, distanceForWidth);
-
-  // Calculate new camera position along its forward vector
-  // We'll move camera to: center - cameraDirection * requiredDistance
-  const newCameraPosition = center.clone().add(cameraDirection.clone().multiplyScalar(-requiredDistance));
-
-  // Animate camera position (no rotation or controls.target change)
-  const duration = 1000;
+  const duration = 1000; // ms
   const startTime = performance.now();
-
   const startPos = camera.position.clone();
 
   function animateCamera(time) {
@@ -291,6 +305,8 @@ function zoomToModel(modelName) {
     const t = Math.min(elapsed / duration, 1);
 
     camera.position.lerpVectors(startPos, newCameraPosition, t);
+    controls.target.lerpVectors(originalControlsTarget, newCameraTarget, t);
+
     controls.update();
 
     if (t < 1) {
@@ -300,7 +316,6 @@ function zoomToModel(modelName) {
 
   requestAnimationFrame(animateCamera);
 }
-
 
 function resetCamera() {
   const duration = 1000;
@@ -318,26 +333,15 @@ function resetCamera() {
 
     if (t < 1) {
       requestAnimationFrame(animateReset);
+    } else {
+      // Animation finished here:
+      currentlyClicked = false;
     }
   }
 
   requestAnimationFrame(animateReset);
 }
 
-
-
-// Models to load
-const modelsToLoad = [
-  { name: 'Office', position: { x: 0, y: -1, z: 0 }, color: 0x8c5b11, scale: 2.7 },
-  { name: 'Computer', position: { x: 0, y: -1, z: -30 }, color: 0x8c5b11, scale: 1.7 },
-  { name: 'Arcade', position: { x: 17 , y: -1.5, z: -5 }, color: 0x8c5b11, scale: 3.4 },
-  { name: 'School', position: { x: 20 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
-];
-
-// Load all models
-modelsToLoad.forEach((model) => {
-  loadModel(model.name, model.position, model.color, model.scale);
-});
 
 // Handle window resizing
 window.addEventListener("resize", () => {
@@ -350,6 +354,10 @@ window.addEventListener('click', onClick, false);
 const label = document.getElementById('hoverLabel');
 
 function onClick(event) {
+  if (currentlyClicked == true)
+  {
+    return;
+  }
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
@@ -363,13 +371,9 @@ function onClick(event) {
   }
 }
 
-
 document.getElementById('closeInfo').addEventListener('click', () => {
   document.getElementById('infoPanel').style.display = 'none';
-});
-
-document.getElementById('closeInfo').addEventListener('click', () => {
-  document.getElementById('infoPanel').style.display = 'none';
+  controls.enabled = true;    // Enable orbit controls
   resetCamera(); // 👈 Go back to original view
 });
 
@@ -406,6 +410,14 @@ function updateActiveLink() {
 }
 
 document.getElementById('infoDescription').addEventListener('scroll', updateActiveLink);
+
+// window.addEventListener('click', () => {
+//   const pos = camera.position;
+//   const tgt = controls.target;
+//   console.log(`Camera position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
+//   console.log(`Camera target: ${tgt.x.toFixed(2)}, ${tgt.y.toFixed(2)}, ${tgt.z.toFixed(2)}`);
+// });
+
 
 // Animate and render loop
 function animate() {

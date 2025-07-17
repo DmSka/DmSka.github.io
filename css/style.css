@@ -42,6 +42,7 @@ html, body {
 
 /* Top Bar */
 .top-bar {
+  height: 10%;
   display: flex;
   align-items: center;
   justify-content: space-between; /* Pushes title left, links right */
@@ -110,8 +111,8 @@ html, body {
   position: fixed;
   top: 0;
   left: 0; /* Cover from the far left */
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full viewport width */
+  height: 100%; /* Full viewport height */
   padding: 15px;
   background: rgba(0, 0, 0, 0.9); /* Optional: make it a bit darker for full-screen effect */
   color: white;
@@ -149,7 +150,7 @@ html, body {
 }
 
 #closeInfo:hover {
-  color: #f00;
+  color: gold;
 }
 
 .scroll-box::-webkit-scrollbar {
@@ -185,7 +186,7 @@ html, body {
 }
 
   #education-section {
-    height: 100vh;
+    height: 80%;
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -213,9 +214,9 @@ html, body {
   .html-box h3 {
     margin-top: 0;
     font-size: 1.6rem;
-    color: var(--green-color);
+    color: var(--white-color);
     font-style: italic;
-    border-bottom: 1px solid var(--green-color);
+    border-bottom: 1px solid var(--white-color);
     padding-bottom: 5px;
     margin-bottom: 10px;
   }
@@ -281,6 +282,17 @@ html, body {
   }
 }
 
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 #infoNav {
   display: flex;
   justify-content: center;
@@ -304,4 +316,81 @@ html, body {
   color: var(--yellow-color);
   font-weight: bold;
   text-decoration: underline;
+}
+
+.tile-row {
+  height: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 40px;
+  overflow-x: auto;          /* Enable horizontal scroll */
+  overflow-y: hidden;        /* Prevent vertical scroll */
+  scroll-snap-type: x mandatory;
+  padding: 20px;
+}
+
+.tile {
+  background-color: #1a1a1a;
+  width: 900px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  border-left: 5px solid var(--orange-color);
+  padding: 0;
+  margin: 20px auto 1rem auto;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  color: var(--white-color);
+  font-family: 'Arvo', 'Oswald', sans-serif;
+  flex-direction: column;
+}
+
+.tile:hover {
+  background-color: #292929;
+}
+
+.tile-image-wrapper {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile-img {
+  width: 85%;
+  height: auto;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 4px solid transparent;
+}
+
+
+.tile:hover .tile-img {
+  width: 92%; 
+  border: 4px solid var(--orange-color);
+}
+
+.tile-text {
+  padding: 20px;
+  text-align: left;
+  white-space: normal;
+}
+
+.tile-text h1, .tile-text h2, .tile-text h3, .tile-text p {
+  margin: 0 0 10px 0;
+}
+
+.tile-text ul {
+  padding-left: 20px;
+  margin-top: 0;
+}
+
+.skills-box {
+  background-color: var(--yellow-color);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  color: black;
+  transition: background-color 0.3s ease;
+  width: 70%;
+  margin: 0 auto;   /* this centers the box horizontally */
 }

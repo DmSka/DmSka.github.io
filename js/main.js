@@ -142,7 +142,109 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
 
 const loadedModels = new Map(); // modelName → modelGroup
 
+const birdFlock = new THREE.Group();
+scene.add(birdFlock);
 
+const loader = new GLTFLoader();
+
+loader.load('models/Bird/scene.gltf', (gltf) => {
+  const originalBird = gltf.scene;
+
+  // Create multiple birds by cloning
+  for (let i = 0; i < 5; i++) {
+    const bird = originalBird.clone(true);
+    bird.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
+    // Rotate each bird to face positive X direction (right)
+    bird.rotation.y = Math.PI *3 / 2;
+
+    bird.position.set(
+      -50 - i * 5,              // Start off left of the scene, spread out horizontally
+      30 + Math.random() * 5,   // Randomize vertical height a bit
+      -20 + Math.random() * 20  // Spread in depth too
+    );
+    birdFlock.add(bird);
+  }
+
+  birdFlock.visible = false; // Start hidden
+});
+
+// Animate the flock flying across the sky
+function flyBirds() {
+  if (birdFlock.children.length === 0) return; // Wait for birds to load
+
+  birdFlock.visible = true;
+  birdFlock.position.set(0, 0, 0); // Reset flock position
+
+  gsap.to(birdFlock.position, {
+    x: 120,      // Fly from left to right across your scene
+    duration: 15,
+    ease: "linear",
+    onUpdate: () => {
+      console.log(`Bird position x: ${birdFlock.position.x.toFixed(2)}`);
+    },
+    onComplete: () => {
+      birdFlock.visible = false; // Hide when done flying
+    },
+  });
+}
+
+// Fly the flock every 30 seconds
+setInterval(() => {
+  flyBirds();
+}, 30000);
+
+const cloudGroup = new THREE.Group();
+scene.add(cloudGroup);
+
+const cloudLoader = new GLTFLoader();
+cloudLoader.load('models/Clouds/scene.gltf', (gltf) => {
+
+  const originalCloud = gltf.scene;
+  originalCloud.traverse((node) => {
+    if (node.isMesh) {
+      node.material = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 1,
+        metalness: 0,
+      });
+    }
+  });
+
+  for (let i = 0; i < 2; i++) {
+    const cloud = originalCloud.clone(true);
+    
+    cloud.scale.setScalar(5 + Math.random()); // random scale
+    cloud.position.set(
+      -70 - Math.random() * 5, // far off left
+      30 + Math.random() * 5,   // high up
+      -30 + Math.random() * 60   // z-depth variation
+    );
+
+    cloudGroup.add(cloud);
+
+    animateCloud(cloud); // Start drifting each cloud
+  }
+});
+
+function animateCloud(cloud) {
+  // Move from left to right across the sky
+  const startX = cloud.position.x;
+  const endX = 150;
+
+  const duration = 60 + Math.random() * 30; // 60–90 seconds
+
+  gsap.to(cloud.position, {
+    x: endX,
+    duration: duration,
+    ease: "none",
+    onComplete: () => {
+      // Reset and repeat
+      cloud.position.x = -100 - Math.random() * 50;
+      cloud.position.y = 40 + Math.random() * 20;
+      animateCloud(cloud);
+    }
+  });
+}
 
 let currentlyClicked = null;
 let currentHovered = null;

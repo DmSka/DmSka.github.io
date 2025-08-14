@@ -345,7 +345,7 @@ function handleModelSelection(modelName) {
   // Show info panel and load content
   switch (modelName) {
       case "Arcade":
-        window.location.href = "gamedev/index.html";
+        window.location.href = "arcade/index.html";
         break;
       case "School":
         window.location.href = "education/index.html";

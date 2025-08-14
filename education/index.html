@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Education Page</title>
+  <link rel="stylesheet" href="education.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Oswald&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="top-bar " style="border-bottom: 1px solid #3A4F41;">
+      <h1 style="color: #3A4F41">Dominic Saksa</h1>
+      <nav class="top-links">
+        <a href="mailto:domsaksa5@gmail.com" target="_blank" rel="noopener noreferrer">Email Me</a>
+        <a href="https://your-project-page.com" target="_blank" rel="noopener noreferrer">Project Page</a>
+        <a href="files/Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </nav>
+    </header>
+    <div class ="columns">
+        <div class="column">
+            <h1 style="font-size: 90pt; margin-left: 50pt; margin-top: 50pt;">Education</h1>
+            <h2 style="font-size: 50pt; margin-left: 100pt;">Michigan <br> State <br> University</h2>
+            <p style="text-align: center; margin-left: 0pt;">I am currently a junior pursuing a Bachelor of Science in Computer Engineering.</p>
+        </div>
+        <div class="column">
+            <img src="../images/171100_hero.jpg" 
+                style="width: 100%; border-radius: 10pt; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
+        </div>
+    </div>
+    <div style="background: linear-gradient(to bottom, #F9EDCC 50%, white 50%); padding-bottom: 20pt;">
+        <div style="background-color: #F9DF74; border-radius: 10pt; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin-top: 20pt; width: 50%; margin:auto; padding-top: 20pt; padding-bottom: 20pt;">
+            <h1 style="font-weight: 400;">Bachelor of Science in Computer Engineering</h1>
+            <hr width="70%" style="background-color: black; height: 1px; border: none; margin: auto; margin-top: 10pt; margin-bottom: 10pt;">
+            <h1 style="font-weight: 400">Expected Graduation: May 2027</h1>
+        </div>
+    </div>
+    <!-- Top block with shadow -->
+    <div style="background-color: white; z-index: 3; box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.3);">
+        <div class="columns" style="padding-top: 80pt; padding-bottom: 80pt;">
+            <div class="column" style="text-align: center; cursor: pointer;" onclick="showContent('clubs')">
+            <h1>Clubs</h1>
+            </div>
+            <div class="column" style="text-align: center; cursor: pointer;" onclick="showContent('projects')">
+            <h1>School Projects</h1>
+            </div>
+            <div class="column" style="text-align: center; cursor: pointer;" onclick="showContent('classes')">
+            <h1>Classes</h1>
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: rgb(221, 221, 221); z-index: 1;">
+        <div id ="clubs" class="content-box">
+            <div class="box-row">
+                <div class="info-box">
+                    <img src="../images/On_Air.jpg" 
+                        style="
+                        width: 100%;
+                        height: 50%;
+                        object-fit: cover;
+                        border-radius: 10pt;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+                        margin: 0;
+                        padding: 0;
+                    ">
+                    <h1 style="margin: 10pt;">Talk of the Irish</h1>
+                    <p style="margin-left: 20pt; margin-right: 20pt;">Founded high school podcast to showcase student voice and highlight school events.</p>
+                    <br>
+                    <p style="margin-left: 20pt; margin-right: 20pt;">Produced and edited in Audacity.</p>
+                    <br>
+                    <p style="margin-left: 20pt; margin-right: 20pt;">Coordinated alumni interviews and met with every student club to speak with club board.</p>
+                </div>
+                <div class="info-box">
+                    <img src="../images/3741dc84-6cab-41aa-a6fe-f9a9e9ff7b23.sized-1000x1000.jpg" 
+                                               style="
+                        width: 100%;
+                        height: 50%;
+                        object-fit: cover;
+                        border-radius: 10pt;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+                        margin: 0;
+                        padding: 0;
+                    ">
+                    <h1 style="margin: 10pt;">Spartan Hackers</h1>
+                    <p style="margin-left: 20pt; margin-right: 20pt;">Member of hackathon group. Go to meetings discuss better software design.</p>
+                </div>
+            </div>
+        </div>
+        <div id ="projects" class="content-box">
+            <div class="box-row">
+                <div class="info-box">
+                    <div class="columns">
+                        <div class="column">
+                            <img src="../images/atmMachine.png" 
+                            style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 10pt;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+                            margin: 0;
+                            padding: 0;
+                            ">
+                        </div>
+                        <div class="column">
+                            <h1 style="margin: 10pt;">ATM State Machine</h1>
+                            <p style="margin-left: 20pt; margin-right: 20pt;">Designed and implemented a finite state machine (FSM) in Verilog to control a Spartan Bucks ATM system with checking, savings, deposit, withdrawal, transfer, and bill pay functionality.</p>
+                            <br>
+                            <p style="margin-left: 20pt; margin-right: 20pt;">Interfaced with simulated cash dispenser and touch display modules, handling inputs/outputs including 8-bit account balances, transaction commands, and warning indicators (overflow, insufficient funds).</p>
+                            <br>
+                            <p style="margin-left: 20pt; margin-right: 20pt;">Managed I/O constraints and timing using a 100 MHz clock and asynchronous reset for synchronous operation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="columns">
+                        <div class="column">
+                            <img src="../images/Screenshot 2023-09-29 091448.png" 
+                                style="
+                                width: 110%;
+                                height: 100%;
+                                object-fit: cover;
+                                border-radius: 10pt;
+                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+                                margin: 0;
+                                padding: 0;
+                            ">
+                        </div>
+                        <div class = "column">
+                            <h1 style="margin: 10pt;">MIT App Inventor</h1>
+                            <p style="margin-left: 20pt; margin-right: 20pt;">Led a group of students to produce a football calendar app which allowed users to look at projected scores, purchase tickets, view team rosters,  and keep track of events.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id ="classes" class="content-box">
+            <div class="box-row">
+                <div class="info-box">
+                    <h1 style="margin: 10pt;">CSE</h1>
+                    <ul style="text-align: left; margin-left: 50pt;">
+                        <li>Intro to Programming I</li>
+                        <li>Intro to Programming II</li>
+                        <li>Discrete Structure in Computer Science</li>
+                        <li>Algorithms and data Structures</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h1 style="margin: 10pt;">ECE</h1>
+                    <ul style="text-align: left; margin-left: 50pt;">
+                        <li>Circuits and Systems I</li>
+                        <li>Circuits and Systems II</li>
+                        <li>Digital Logic Fundamentals</li>
+                        <li>Electircal Engineering Analysis</li>
+                        <li>Electronic Circuits and Systems</li>
+                        <br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(section) {
+            // Hide all content boxes
+            const boxes = document.querySelectorAll('.content-box');
+            boxes.forEach(box => box.style.display = 'none');
+
+            // Show the selected content box
+            const selected = document.getElementById(section);
+            if (selected) {
+            selected.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+<footer>
+    <h1 style="text-align: center; margin-top: 10pt; padding-bottom: 15pt;">Dominic Saksa</h1>
+</footer>
+</html>

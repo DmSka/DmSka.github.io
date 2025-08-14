@@ -343,28 +343,27 @@ function handleModelSelection(modelName) {
   zoomToModel(modelName);
 
   // Show info panel and load content
-  const infoPanel = document.getElementById('infoPanel');
-  controls.enabled = false;   // Disable orbit controls
-  currentlyClicked = true;
-  const desc = document.getElementById('infoDescription');
-  document.getElementById('hoverLabel').style.display = 'none';
+  switch (modelName) {
+      case "Arcade":
+        window.location.href = "gamedev/index.html";
+        break;
+      case "School":
+        window.location.href = "education/index.html";
+        break;
+        
+      case "Computer":
+        window.location.href = "computer/index.html";
+        break;
+      case "Office":
+        window.location.href = "work/index.html";
+        break;
+      case "Park":
+        window.location.href = "themepark/index.html";
+        break;
+      default:
 
-  if (modelInfo[modelName]) {
-    desc.innerHTML = modelInfo[modelName].description;
-  } else {
-    desc.textContent = "No description available.";
+        return;
   }
-
-  infoPanel.style.display = 'block';
-
-  // Highlight the active nav link:
-  document.querySelectorAll('#infoNav a').forEach(link => {
-    if (link.getAttribute('data-model') === modelName) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-  });
 }
 
 function zoomToModel(modelName) {

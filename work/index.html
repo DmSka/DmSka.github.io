@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dominic Saksa — Education | CS Portfolio</title>
+  <title>Dominic Saksa — Work Experience | CS Portfolio</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Computer Science portfolio — education page">
+  <meta name="description" content="Computer Science portfolio — Work page">
   <style>
     :root{
       --accent:#EDAE49;
@@ -37,7 +37,7 @@
 
     .hero{
       min-height:50vh;
-      background-image: url('assets/campus-plan-HERO.jpg');
+      background-image: url('assets/header.png');
       background-size:cover;
       background-position:center;
       position:relative;
@@ -56,7 +56,6 @@
 
     .container{max-width:1400px;margin:32px auto;padding:24px}
 
-    /* Grid layout for profile + education + MSU photo */
     .education-section{
       display:grid;
       grid-template-columns:250px 2fr 300px;
@@ -163,9 +162,9 @@
     }
 
     .project-block img.project-img {
-    width: 300px;       /* fixed width for image */
-    height: 300px;       /* fixed height, or auto for proportional */
-    object-fit: cover;  /* crops nicely */
+    width: 300px;  
+    height: 300px;     
+    object-fit: cover; 
     border-radius: 8px;
     }
 
@@ -298,8 +297,7 @@
   <section class="hero" role="banner">
     <div class="hero-content ">
       <div>
-        <div class="headline">Education</div>
-        <div style="color:rgba(255, 255, 255, 0.85);margin-top:6px">B.S. in Computer Engineering — Michigan State University</div>
+        <div class="headline">Work Experience</div>
       </div>
     </div>
   </section>
@@ -326,60 +324,24 @@
       </div>
 
       <div class="edu-card fade-slide-in-below">
-        <h2 id="education-heading" class="edu-title">Education</h2>
-        <div class="edu-meta">Michigan State University — East Lansing, MI • Expected Graduation: May 2027</div>
+        <h2 id="education-heading" class="edu-title">Work Experience</h2>
 
         <div class="edu-list">
             <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">B.S. Computer Engineering</h4>
-                <p class="muted">Relevant coursework: Data Structures and Algorithms, Circuit Analysis, Electronic Circuits, Microprossors and Digital Systems, Games and Interactivity</p>
-                <p style="margin-top:8px"><span class="chip">GPA: 3.02</span></p>
-            </article>
-            
-            <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">Yonsei Summer Semester Abroad</h4>
-                <p style="margin-top:8px"><span class="chip">Summer 2024</span></p>
-            </article>
-
-            <article class="edu-item" aria-labelledby="projects-heading">
-            <h4 id="projects-heading">Selected Academic Projects</h4>
-
-            <div class="project-block">
-                <img src="assets/atmMachine (1).png" alt="Theme Park Ride Simulation" class="project-img">
-                <div class="project-content">
-                    <h5>ATM State Machine</h5>
-                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">Verilog</span></p>
-                    <br>
-                    <p>Designed and implemented a finite state machine (FSM) in Verilog to control a Spartan Bucks ATM system with checking, savings, deposit, withdrawal, transfer, and bill pay functionality.</p>
-                    <br>
-                    <p>Interfaced with simulated cash dispenser and touch display modules, handling inputs/outputs including 8-bit account balances, transaction commands, and warning indicators (overflow, insufficient funds).</p>
-                    <br>
-                    <p>Managed I/O constraints and timing using a 100 MHz clock and asynchronous reset for synchronous operation.</p>
-                </div>
-            </div>
-
-            <div class="project-block">
-                <img src="assets/footballCalendar.png" alt="Theme Park Ride Simulation" class="project-img">
-                <div class="project-content">
-                    <h5>MIT App Inventor | Football Calendar</h5>
-                    <p>Led a group of students to produce a football calendar app which allowed users to look at projected scores, purchase tickets, view team rosters, and keep track of events.</p>
-                    <br>
-                    <p>Project was created for intro Engineering design class using MIT App Inventor program with visual coding.</p>
-                </div>
-            </div>
-            </article>
-
-            <article class="edu-item" aria-labelledby="activities-heading">
-                <h4 id="activities-heading">Activities & Leadership</h4>
-                <p style="margin:6px 0 0">• Member of Triangle engineering fraternity - FIRST Robotics Chair</p>
-                <p style="margin:6px 0 0">• MSU IEEE Branch </p>
+                <h4 id="msu-degree">BI Worldwide • June 2025 - Current</h4>
+                <p style="margin-top:8px"><span class="chip">Junior Developer</span></p>
+                <p style="margin-top:8px">Developed responsive HTML email campaigns in VS Code for Metro Detroit automotive dealerships, converting PDF templates into StrongMail-ready packages that informed clients about employee incentives. </p>
+                <br>
+                <p style="margin-top:8px">Applied responsive design best practices to ensure compatibility across major email clients and devices. </p>
+                <br>
+                <p style="margin-top:8px">Collaborated with account teams to align designs with brand guidelines and client objectives.</p>
             </article>
 
         </div>
       </div>
 
       <aside class="msu-photo fade-slide-in-right" aria-label="MSU campus photo">
-        <img src="assets/beaumont-tower-2021.png" alt="beaumont-tower-2021">
+        <img src="assets/SideView.jpg" alt="beaumont-tower-2021">
       </aside>
 
     </section>

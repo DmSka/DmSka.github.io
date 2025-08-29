@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dominic Saksa — Education | CS Portfolio</title>
+  <title>Dominic Saksa — Theme Parks | CS Portfolio</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Computer Science portfolio — education page">
+  <meta name="description" content="Computer Science portfolio — theme parks page">
   <style>
     :root{
       --accent:#EDAE49;
@@ -37,7 +37,7 @@
 
     .hero{
       min-height:50vh;
-      background-image: url('assets/campus-plan-HERO.jpg');
+      background-image: url('assets/backgroundRides.jpg');
       background-size:cover;
       background-position:center;
       position:relative;
@@ -56,7 +56,6 @@
 
     .container{max-width:1400px;margin:32px auto;padding:24px}
 
-    /* Grid layout for profile + education + MSU photo */
     .education-section{
       display:grid;
       grid-template-columns:250px 2fr 300px;
@@ -163,9 +162,9 @@
     }
 
     .project-block img.project-img {
-    width: 300px;       /* fixed width for image */
-    height: 300px;       /* fixed height, or auto for proportional */
-    object-fit: cover;  /* crops nicely */
+    width: 300px; 
+    height: 300px;  
+    object-fit: cover; 
     border-radius: 8px;
     }
 
@@ -275,11 +274,149 @@
 
     .fade-slide-in-below { animation: slideInBelow 0.8s ease-out both; animation-delay: 0.2s; }
 
+    .parks-section {
+      margin-top: 32px;
+    }
+
+    .park-block {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.08);
+      margin-bottom: 32px;
+    }
+
+    .park-image {
+      width: 100%;
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+    }
+
+    .park-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #0f1724;
+    }
+
+    .land-block {
+      margin-left: 8px;
+      margin-bottom: 20px;
+    }
+
+    .land-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .attraction-card {
+      display: flex;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .attraction-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .attraction-image {
+      width: 140px;
+      height: 100px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .attraction-info {
+      padding: 12px;
+    }
+
+    .attraction-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .attraction-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      border: none;
+      background: #eee;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .tab.active {
+      background: #f9c45a;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .attractions {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+      gap: 24px;
+    }
+
+    .attraction {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; 
+    }
+
+    .attraction:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .attraction img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+
 
 
   </style>
 </head>
+
 <body>
+
 
   <header>
     <div class="topbar">
@@ -298,8 +435,8 @@
   <section class="hero" role="banner">
     <div class="hero-content ">
       <div>
-        <div class="headline">Education</div>
-        <div style="color:rgba(255, 255, 255, 0.85);margin-top:6px">B.S. in Computer Engineering — Michigan State University</div>
+        <div class="headline">Theme Parks</div>
+        <div style="color:rgba(255, 255, 255, 0.85);margin-top:6px">I have always been fascinated by theme parks and the engineering that makes their immersive experiences possible.</div>
       </div>
     </div>
   </section>
@@ -326,60 +463,88 @@
       </div>
 
       <div class="edu-card fade-slide-in-below">
-        <h2 id="education-heading" class="edu-title">Education</h2>
-        <div class="edu-meta">Michigan State University — East Lansing, MI • Expected Graduation: May 2027</div>
+        <section class="theme-parks">
+        <h2>Theme Park Showcase</h2>
 
-        <div class="edu-list">
-            <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">B.S. Computer Engineering</h4>
-                <p class="muted">Relevant coursework: Data Structures and Algorithms, Circuit Analysis, Electronic Circuits, Microprossors and Digital Systems, Games and Interactivity</p>
-                <p style="margin-top:8px"><span class="chip">GPA: 3.02</span></p>
-            </article>
-            
-            <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">Yonsei Summer Semester Abroad</h4>
-                <p style="margin-top:8px"><span class="chip">Summer 2024</span></p>
-            </article>
-
-            <article class="edu-item" aria-labelledby="projects-heading">
-            <h4 id="projects-heading">Selected Academic Projects</h4>
-
-            <div class="project-block">
-                <img src="assets/atmMachine (1).png" alt="Theme Park Ride Simulation" class="project-img">
-                <div class="project-content">
-                    <h5>ATM State Machine</h5>
-                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">Verilog</span></p>
-                    <br>
-                    <p>Designed and implemented a finite state machine (FSM) in Verilog to control a Spartan Bucks ATM system with checking, savings, deposit, withdrawal, transfer, and bill pay functionality.</p>
-                    <br>
-                    <p>Interfaced with simulated cash dispenser and touch display modules, handling inputs/outputs including 8-bit account balances, transaction commands, and warning indicators (overflow, insufficient funds).</p>
-                    <br>
-                    <p>Managed I/O constraints and timing using a 100 MHz clock and asynchronous reset for synchronous operation.</p>
-                </div>
-            </div>
-
-            <div class="project-block">
-                <img src="assets/footballCalendar.png" alt="Theme Park Ride Simulation" class="project-img">
-                <div class="project-content">
-                    <h5>MIT App Inventor | Football Calendar</h5>
-                    <p>Led a group of students to produce a football calendar app which allowed users to look at projected scores, purchase tickets, view team rosters, and keep track of events.</p>
-                    <br>
-                    <p>Project was created for intro Engineering design class using MIT App Inventor program with visual coding.</p>
-                </div>
-            </div>
-            </article>
-
-            <article class="edu-item" aria-labelledby="activities-heading">
-                <h4 id="activities-heading">Activities & Leadership</h4>
-                <p style="margin:6px 0 0">• Member of Triangle engineering fraternity - FIRST Robotics Chair</p>
-                <p style="margin:6px 0 0">• MSU IEEE Branch </p>
-            </article>
-
+        <div class="tabs">
+          <button class="tab active" data-tab="asia">DM Gardens Asia</button>
+          <button class="tab" data-tab="Fallout">Fallout the Ride</button>
+          <button class="tab" data-tab="Recreations">Recreations</button>
         </div>
+
+        <div class="tab-content active" id="asia">
+          <h3>DM Gardens Asia</h3>
+          <div class="attractions">
+            <div class="attraction">
+              <img src="assets/tori.jpg" alt="Tori">
+              <h4>Tori</h4>
+              <p>Graceful inverted B&M themed to Japanese birds.</p>
+            </div>
+            <div class="attraction">
+              <img src="assets/Sakana.jpg" alt="Sakana">
+              <h4>Sakana</h4>
+              <p>High-speed Intemin hyper coaster themed to Japanese fishing.</p>
+            </div>
+            <div class="attraction">
+              <img src="assets/nepal.jpg" alt="Nepal">
+              <h4>Raging Yak</h4>
+              <p>Launched sweeping outdoor coaster themed to the Nepalese mountains.</p>
+            </div>
+
+            <div class="attraction">
+              <img src="assets/Changu.jpg" alt="Changu">
+              <h4>Iron Elephant</h4>
+              <p>Intense RMC hybrid in the Thailand portion of the park.</p>
+            </div>
+
+            <div class="attraction">
+              <img src="assets/Bengal.jpg" alt="Bengal">
+              <h4>Bengal</h4>
+              <p>High G-Force B&M sitdown in the India section of the park.</p>
+            </div>
+
+            <div class="attraction">
+              <img src="assets/SecretsOfTheArabianTemple.jpg" alt="SecretsOfTheArabianTemple">
+              <h4>Secrets Of The Arabian Temple</h4>
+              <p>Highly themed family launched coaster that takes riders through caves and temples trying to find the lost gemstones.</p>
+            </div>
+
+            
+          </div>
+        </div>
+
+        <div class="tab-content" id="Fallout">
+          <h3>Fallout the Ride</h3>
+          <div class="attractions">
+            <div class="attraction">
+              <img src="images/hagrids.jpg" alt="Fallout">
+              <h4>Hagrid’s Magical Creatures Motorbike Adventure</h4>
+              <p>A thrilling journey through the Forbidden Forest.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="Recreations">
+          <h3>Recreations</h3>
+          <div class="attractions">
+            <div class="attraction">
+              <img src="assets/tot2.jpg" alt="Tower of Terror">
+              <h4>Tower of Terror</h4>
+              <p>Recreation of Walt Disney World's Tower of Terror.</p>
+            </div>
+            <div class="attraction">
+              <img src="assets/RnR.jpg" alt="Rock 'n' Roller Coaster">
+              <h4>Rock 'n' Roller Coaster</h4>
+              <p>Recreation of Walt Disney World's Rock 'n' Roller Coaster.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       </div>
 
       <aside class="msu-photo fade-slide-in-right" aria-label="MSU campus photo">
-        <img src="assets/beaumont-tower-2021.png" alt="beaumont-tower-2021">
+        <img src="assets/sideRide.jpg" alt="rides">
       </aside>
 
     </section>
@@ -388,6 +553,23 @@
   <footer style="text-align:center;padding:28px 12px;color:var(--muted);font-size:0.95rem">
     Dominic Saksa — Computer Engineering Student
   </footer>
+
+<script>
+  const tabs = document.querySelectorAll(".tab");
+  const contents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      // Remove active states
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+
+      // Add active state to clicked tab and matching content
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    });
+  });
+</script>
 
 </body>
 </html>

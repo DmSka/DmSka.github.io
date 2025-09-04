@@ -25,7 +25,7 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 const clickableObjects = [];
-const meshToModelMap = new Map();  // key: mesh, value: modelName
+const meshToModelMap = new Map();
 
 let originalCameraPos = camera.position.clone();
 let originalControlsTarget = controls.target.clone();
@@ -37,7 +37,7 @@ keyLight.position.set(50, 100, 100);
 keyLight.castShadow = true;
 scene.add(keyLight);
 
-keyLight.shadow.mapSize.width = 2048; // Higher res = sharper shadows
+keyLight.shadow.mapSize.width = 2048;
 keyLight.shadow.mapSize.height = 2048;
 
 keyLight.shadow.camera.near = 1;
@@ -111,7 +111,6 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
         model.position.set(position.x, position.y, position.z);
         model.scale.set(scale, scale, scale);
 
-        // 🔁 Rotate Arcade model 90 degrees around Y
         if (modelName === 'Arcade') {
           model.rotation.y = Math.PI / 2;
         }
@@ -131,7 +130,7 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
         });
 
         scene.add(model);
-        loadedModels.set(modelName, model);  // Save the whole model group
+        loadedModels.set(modelName, model); 
       },
       undefined,
       (error) => {
@@ -140,7 +139,7 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
     );
 }
 
-const loadedModels = new Map(); // modelName → modelGroup
+const loadedModels = new Map();
 
 const birdFlock = new THREE.Group();
 scene.add(birdFlock);

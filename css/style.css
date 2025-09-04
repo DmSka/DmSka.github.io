@@ -392,24 +392,24 @@ html, body {
   color: black;
   transition: background-color 0.3s ease;
   width: 70%;
-  margin: 0 auto;   /* this centers the box horizontally */
+  margin: 0 auto; 
 }
 
 #welcomeMessage {
   position: absolute;
-  bottom: 50px;
+  bottom: 80px;
   left: 50%;
-  transform: translateX(-50%) scale(0.8); /* start slightly smaller */
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
+  transform: translateX(-50%) scale(0.8);
+  color: rgb(0, 0, 0);
   padding: 20px 30px;
+  line-height: 35px;
   border-radius: 12px;
   font-size: 18px;
   max-width: 700px;
   text-align: center;
   z-index: 10;
-  opacity: 0; /* start invisible */
-  animation: fadeInScale 1.5s ease-out forwards; /* trigger animation */
+  opacity: 0; 
+  animation: fadeInScale 1.5s ease-out forwards; 
   animation-delay: 1.8s;
 }
 

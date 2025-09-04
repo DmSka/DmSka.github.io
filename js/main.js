@@ -213,17 +213,22 @@ cloudLoader.load('models/Clouds/scene.gltf', (gltf) => {
   for (let i = 0; i < 2; i++) {
     const cloud = originalCloud.clone(true);
     
-    cloud.scale.setScalar(5 + Math.random()); // random scale
+    cloud.scale.setScalar(5 + Math.random());
     cloud.position.set(
-      -70 - Math.random() * 5, // far off left
-      30 + Math.random() * 5,   // high up
-      -30 + Math.random() * 60   // z-depth variation
+      -70 - Math.random() * 5,
+      30 + Math.random() * 5,
+      80
     );
+
+    cloud.rotation.y = Math.random() * Math.PI * 2; // spin around Y
+    cloud.rotation.x = (Math.random() - 0.5) * 0.2; // small tilt up/down
+    cloud.rotation.z = (Math.random() - 0.5) * 0.2; // small roll
 
     cloudGroup.add(cloud);
 
     animateCloud(cloud); // Start drifting each cloud
   }
+
 });
 
 function animateCloud(cloud) {
@@ -366,6 +371,17 @@ function handleModelSelection(modelName) {
   }
 }
 
+camera.fov = 90;
+camera.updateProjectionMatrix();
+
+gsap.to(camera, {
+  fov: 30,
+  duration: 2.5,
+  ease: "power2.out",
+  onUpdate: () => camera.updateProjectionMatrix()
+});
+
+
 function zoomToModel(modelName) {
   const model = loadedModels.get(modelName);
   if (!model) {
@@ -456,7 +472,24 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// Handle clicks (desktop) and taps (mobile)
 window.addEventListener('click', onClick, false);
+window.addEventListener('touchend', (event) => {
+  // Normalize touch coordinates
+  const touch = event.changedTouches[0];
+  mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(clickableObjects);
+
+  if (intersects.length > 0) {
+    const clickedMesh = intersects[0].object;
+    const modelName = meshToModelMap.get(clickedMesh);
+    handleModelSelection(modelName);
+  }
+}, false);
+
 const label = document.getElementById('hoverLabel');
 
 function onClick(event) {

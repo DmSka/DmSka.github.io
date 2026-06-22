@@ -1,3 +1,4 @@
-Building a 3d portfolio with CSS, JS, and HTMl.
+# Personal Portfolio — Dominic Saksa
 
-Go to https://dmska.github.io/ to access page.
+3D interactive portfolio built with CSS, JavaScript, and HTML.
+Visit at https://dmska.github.io/

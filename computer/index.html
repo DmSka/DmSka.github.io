@@ -1,3 +1,7 @@
+<!-- ================================================================ -->
+<!-- computer/index.html — Programming Projects Page -->
+<!-- Dominic Saksa -->
+<!-- ================================================================ -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,7 +10,7 @@
   <title>Dominic Saksa — Programming Projects | CS Portfolio</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Computer Science portfolio — education page">
+  <meta name="description" content="Computer Science portfolio — programming and hardware projects">
   <style>
     :root{
       --accent:#EDAE49;
@@ -31,7 +35,7 @@
     .brand{color:#0f1724;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:12px}
     .brand .initial{background:var(--accent);color:white;padding:8px;border-radius:8px}
 
-    .navlinks{display:flex;gap:18px}
+    .navlinks{display:flex;gap:18px;align-items:center}
     .navlinks a{color:#0f1724;text-decoration:none;font-weight:600;background:transparent;padding:8px 12px;border-radius:10px}
     .navlinks a:hover{background:rgba(0,0,0,0.05)}
 
@@ -56,7 +60,6 @@
 
     .container{max-width:1400px;margin:32px auto;padding:24px}
 
-    /* Grid layout for profile + education + MSU photo */
     .main-section{
       display:grid;
       grid-template-columns:250px 2fr 300px;
@@ -159,10 +162,17 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
       }
 
+    .nav-dropdown{position:relative;display:inline-block}
+    .nav-dropdown-btn{background:var(--accent);color:white;border:none;padding:8px 16px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background 0.2s ease;white-space:nowrap}
+    .nav-dropdown-btn:hover{background:#f9c45a}
+    .nav-dropdown-menu{display:none;position:absolute;top:100%;right:0;min-width:220px;background:white;box-shadow:0 8px 24px rgba(0,0,0,0.15);border-radius:10px;padding:8px 0;z-index:200;border:1px solid rgba(0,0,0,0.08)}
+    .nav-dropdown-menu.show{display:block}
+    .nav-dropdown-menu a{display:block;padding:10px 18px;color:#3A4F41;text-decoration:none;font-weight:600;font-size:14px;transition:background 0.2s ease,color 0.2s ease}
+    .nav-dropdown-menu a:hover{background:#F9DF74;color:black}
+
     @media (max-width:1100px){
-      .main-section-{grid-template-columns:1fr;}
+      .main-section{grid-template-columns:1fr;}
       .hero-content{flex-direction:column;align-items:flex-start;margin-top:20px}
-      .navlinks{display:none}
     }
 
     .project-block {
@@ -289,6 +299,7 @@
 
     .fade-slide-in-below { animation: slideInBelow 0.8s ease-out both; animation-delay: 0.2s; }
 
+    @media (max-width:768px){.topbar{padding:10px 14px}.brand{font-size:0.95rem}.navlinks{gap:10px}.navlinks a{font-size:13px;padding:6px 8px}.nav-dropdown-btn{padding:6px 12px;font-size:13px}.nav-dropdown-menu{min-width:180px}}
 
   </style>
 </head>
@@ -301,9 +312,19 @@
         <div>Dominic Saksa</div>
       </div>
       <nav class="navlinks" aria-label="Top navigation">
-        <a href="/files/Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        <a href="mailto:domsaksa5@gmail.com">Email</a>
-        <a href="/index.html">Home</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" id="navDropdownBtn" aria-haspopup="true" aria-expanded="false">Explore &#9662;</button>
+          <div class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+            <a href="../education/index.html" role="menuitem">Education</a>
+            <a href="../work/index.html" role="menuitem">Work Experience</a>
+            <a href="../computer/index.html" role="menuitem">Programming Projects</a>
+            <a href="../arcade/index.html" role="menuitem">Game Development</a>
+            <a href="../themepark/index.html" role="menuitem">Theme Parks</a>
+          </div>
+        </div>
+        <a href="../files/Resume.pdf" target="_blank" rel="noopener" class="nav-plain">Resume</a>
+        <a href="mailto:domsaksa5@gmail.com" class="nav-plain">Email</a>
+        <a href="../index.html" class="nav-plain">Home</a>
       </nav>
     </div>
   </header>
@@ -318,11 +339,11 @@
   </section>
 
   <main class="container" role="main">
-    <section class="main-section " aria-labelledby="education-heading">
+    <section class="main-section" aria-labelledby="education-heading">
       <div class="profile-section fade-slide-in-left">
         <div class="profile-pic"><img src="assets/dom.JPG" alt="Dominic Saksa"></div>
         <h3>Dominic Saksa</h3>
-        <p style="font-size: 15px; text-align: left;">Computer Engineering student passionate about the amusement park industry, bringing hardware and software together to solve complex challenges.</p>
+        <p style="font-size: 15px; text-align: left;">Computer Engineering student pursuing a career in software engineering and embedded systems with experience in embedded programming, independent PCB design, and team-based application development.</p>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/dominic-saksa-895165298/" target="_blank" aria-label="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="currentColor">
@@ -344,12 +365,41 @@
         <div class="edu-list">
             <article class="edu-item" aria-labelledby="msu-degree">
                 <h4 id="msu-degree">Proficiencies</h4>
-                <p class="muted">Python, C++, C#, Javascript, HTML, Lua, Verilog</p>
+                <p class="muted">C#, C++, CSS, HTML, JavaScript, Python, SPICE, Verilog</p>
             </article>
 
           <article class="edu-item" aria-labelledby="projects-heading">
+            <div class="project-content">
+              <h3>Spartanoid | Object-Oriented Software Design</h3>
+              <p style="margin-top:8px; color:#414141;"><span class="chip">C++</span><span class="chip">XML</span><span class="chip">OOP</span><span class="chip">Visitor Pattern</span></p>
+              <h5 style="margin-top: 10px;">Multi-level brick-breaker game built with a team.</h5>
+              <p>Led a team building a multi-level brick-breaker game with real-time physics, collision detection, and scoring.</p>
+              <p>Engineered a polymorphic game object architecture with the Visitor design pattern for heterogeneous object interactions, and XML-based level loading for dynamic configuration.</p>
+            </div>
+          </article>
+
+          <article class="edu-item" aria-labelledby="projects-heading">
+            <div class="project-content">
+              <h3>ALU Project | Microprocessors and Digital Systems</h3>
+              <p style="margin-top:8px; color:#414141;"><span class="chip">Verilog</span><span class="chip">Vivado</span><span class="chip">Digital Logic</span></p>
+              <h5 style="margin-top: 10px;">8-bit arithmetic logic unit.</h5>
+              <p>Programmed an 8-bit ALU with four logic operators and multiplexer output selection.</p>
+            </div>
+          </article>
+
+          <article class="edu-item" aria-labelledby="projects-heading">
+            <div class="project-content">
+              <h3>ATM State Machine | Computer Logic Fundamentals</h3>
+              <p style="margin-top:8px; color:#414141;"><span class="chip">Verilog</span><span class="chip">Vivado</span><span class="chip">FSM</span></p>
+              <h5 style="margin-top: 10px;">Finite state machine controlling an ATM.</h5>
+              <p>Designed a finite state machine controlling an ATM with checking, savings, deposit, withdrawal, transfer, and bill pay.</p>
+              <p>Interfaced with simulated hardware using 8-bit balances, transaction commands, and warning indicators on a 100 MHz clock.</p>
+            </div>
+          </article>
+
+          <article class="edu-item" aria-labelledby="projects-heading">
             <div class="project-block ">
-                <img src="assets/DisneyWorldle.PNG" alt="Theme Park Ride Simulation" class="project-img">
+                <img src="assets/DisneyWorldle.PNG" alt="Disney Worldle" class="project-img">
                 <div class="project-content">
                     <h3>Disney Worldle</h3>
                     <p style="margin-top:8px; color:#414141;"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Javascript</span></p>
@@ -375,17 +425,13 @@
           
             <br>
           <article class="edu-item" aria-labelledby="projects-heading">
-            <div class="project-block ">
-              <img src="assets/.PNG" alt="Pokemon Demonstration" class="project-img">
-              <div class="project-content">
-                  <h3>Pokemon Parallax Project</h3>
-                  <p style="margin-top:8px; color:#414141;"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Networking</span><span class="chip">Headtracking</span></p>
-                  <h5 style="margin-top: 10px;">Headtracking parallax effect used to interact with Pokemon.</h5>
-                  <p>Using a Parallax Headtracking technique to make a 2D screen appear 3D, a player will interact with a device by moving their head.</p>
-                  <p>Using a PS3 Eye camera for input, fed into AI powered headtracking software, OpenTrack. This data is converted to a UDP and sent over network. These packages are captured by the Unity engine and converted into 3d cordinate space.</p>
-                  <p>To achieve the view and orientation to be correct, an Off-Axis projection was used. This is similar to how we see through a window, where or perspective is projected onto that surface.</p>
-                  <br>
-              </div>
+            <div class="project-content">
+                <h3>Pokemon Parallax Project</h3>
+                <p style="margin-top:8px; color:#414141;"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Networking</span><span class="chip">Headtracking</span></p>
+                <h5 style="margin-top: 10px;">Headtracking parallax effect used to interact with Pokemon.</h5>
+                <p>Built a headtracking system using a PS3 Eye camera, OpenTrack, and Unity to make a 2D screen appear 3D as the player moves their head.</p>
+                <p>Implemented UDP network transmission of tracking data and mapped it to 3D coordinate space using Off-Axis projection, simulating perspective through a window.</p>
+                <br>
             </div>
           </article>
 
@@ -412,8 +458,8 @@
         <h2 id="education-heading" class="edu-title">Hardware</h2>
         <div class="edu-list">
             <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">Hardware Used</h4>
-                <p class="muted">Arduino, Raspberry PI, Breadboards</p>
+                <h4 id="msu-degree">Hardware &amp; Design Tools</h4>
+                <p class="muted">AutoCAD, Blender, CATIA V5, KiCad, Unity, Arduino, Raspberry PI</p>
             </article>
             <article class="edu-item" aria-labelledby="projects-heading">
 
@@ -436,6 +482,15 @@
               <p>Modified and resoldered components from the original product to allow remote firing.</p>
             </div>
             </article>
+
+            <article class="edu-item" aria-labelledby="projects-heading">
+            <div class="project-content">
+              <h5>Smart Plant Watering System</h5>
+              <p style="margin-top:8px; color:#414141;"><span class="chip">Arduino</span><span class="chip">Embedded C</span><span class="chip">Sensors</span></p>
+              <p>Built an automated plant watering system using a microcontroller, soil moisture sensor, and water pump to maintain optimal soil moisture.</p>
+              <p>Programmed autonomous watering logic that reads sensor data in real time and actuates the pump only when the soil dries below a set threshold.</p>
+            </div>
+            </article>
         </div>
       </div>
 
@@ -450,6 +505,10 @@
     Dominic Saksa — Computer Engineering Student
     <p style="font-size: 14px;">domsaksa5@gmail.com</p>
   </footer>
+
+<script>
+(function(){var btn=document.getElementById('navDropdownBtn');var menu=document.getElementById('navDropdownMenu');if(!btn||!menu)return;btn.addEventListener('click',function(e){e.stopPropagation();var isOpen=menu.classList.toggle('show');btn.setAttribute('aria-expanded',isOpen)});document.addEventListener('click',function(e){if(!menu.contains(e.target)&&e.target!==btn){menu.classList.remove('show');btn.setAttribute('aria-expanded','false')}});menu.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){menu.classList.remove('show');btn.setAttribute('aria-expanded','false')})})})();
+</script>
 
 </body>
 </html>

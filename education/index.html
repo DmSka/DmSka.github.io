@@ -1,12 +1,16 @@
+<!-- ================================================================ -->
+<!-- education/index.html — Education Page -->
+<!-- Dominic Saksa -->
+<!-- ================================================================ -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dominic Saksa — Education | CS Portfolio</title>
+  <title>Dominic Saksa — Education | Portfolio</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Computer Science portfolio — education page">
+  <meta name="description" content="Computer Engineering portfolio — education page">
   <style>
     :root{
       --accent:#EDAE49;
@@ -31,9 +35,28 @@
     .brand{color:#0f1724;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:12px}
     .brand .initial{background:var(--accent);color:white;padding:8px;border-radius:8px}
 
-    .navlinks{display:flex;gap:18px}
+    .navlinks{display:flex;gap:18px;align-items:center}
     .navlinks a{color:#0f1724;text-decoration:none;font-weight:600;background:transparent;padding:8px 12px;border-radius:10px}
     .navlinks a:hover{background:rgba(0,0,0,0.05)}
+
+    .nav-dropdown{position:relative;display:inline-block}
+    .nav-dropdown-btn{
+      background:var(--accent);color:white;border:none;
+      padding:8px 16px;border-radius:8px;font-weight:600;font-size:15px;
+      cursor:pointer;transition:background 0.2s ease;white-space:nowrap;
+    }
+    .nav-dropdown-btn:hover{background:#f9c45a}
+    .nav-dropdown-menu{
+      display:none;position:absolute;top:100%;right:0;min-width:220px;
+      background:white;box-shadow:0 8px 24px rgba(0,0,0,0.15);
+      border-radius:10px;padding:8px 0;z-index:200;border:1px solid rgba(0,0,0,0.08);
+    }
+    .nav-dropdown-menu.show{display:block}
+    .nav-dropdown-menu a{
+      display:block;padding:10px 18px;color:#3A4F41;text-decoration:none;
+      font-weight:600;font-size:14px;transition:background 0.2s ease,color 0.2s ease;
+    }
+    .nav-dropdown-menu a:hover{background:#F9DF74;color:black}
 
     .hero{
       min-height:50vh;
@@ -56,7 +79,6 @@
 
     .container{max-width:1400px;margin:32px auto;padding:24px}
 
-    /* Grid layout for profile + education + MSU photo */
     .education-section{
       display:grid;
       grid-template-columns:250px 2fr 300px;
@@ -86,7 +108,7 @@
     .social-links {
       display: flex;
       justify-content: center;
-      gap: 31px; 
+      gap: 31px;
       margin-top: 12px;
       flex-wrap: wrap;
     }
@@ -97,7 +119,7 @@
       justify-content: center;
       background: var(--accent);
       border-radius: 50%;
-      width: 40px;  
+      width: 40px;
       height: 40px;
       text-decoration: none;
       transition: transform 0.2s ease, background 0.2s ease;
@@ -111,7 +133,7 @@
 
     .social-links a:hover {
       transform: scale(1.2);
-      background: #0f1724; 
+      background: #0f1724;
     }
 
     .edu-card{background:var(--card-bg);padding:24px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(2,6,23,0.08)}
@@ -122,15 +144,15 @@
       padding:12px;
       border-radius:10px;
       border:1px solid rgba(15,23,36,0.04);
-      transition: 
-        background 0.3s ease, 
-        transform 0.3s ease, 
+      transition:
+        background 0.3s ease,
+        transform 0.3s ease,
         box-shadow 0.3s ease;
       }
     .edu-item:hover{
       background: #f0f0f0;
-      transform: scale(1.01); 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      transform: scale(1.01);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       cursor: pointer;
     }
     .edu-item h4{margin:0;font-size:1rem}
@@ -142,14 +164,14 @@
     .chip{display:inline-block;background:#f3f4f6;padding:6px 10px;border-radius:999px;font-weight:600}
     .chip:hover{
         background: #fcd285;
-        transform: scale(1.05); 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       }
 
     @media (max-width:1100px){
       .education-section{grid-template-columns:1fr;}
       .hero-content{flex-direction:column;align-items:flex-start;margin-top:20px}
-      .navlinks{display:none}
+      .navlinks .nav-plain{display:none}
     }
 
     .project-block {
@@ -163,9 +185,9 @@
     }
 
     .project-block img.project-img {
-    width: 300px;       /* fixed width for image */
-    height: 300px;       /* fixed height, or auto for proportional */
-    object-fit: cover;  /* crops nicely */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
     border-radius: 8px;
     }
 
@@ -204,9 +226,9 @@
     }
 
     .project-link:hover {
-      background: #f9c45a; 
-      transform: scale(1.05); 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      background: #f9c45a;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
 
@@ -217,11 +239,11 @@
     @keyframes slideIn {
       0% {
         opacity: 0;
-        transform: translateY(30px); 
+        transform: translateY(30px);
       }
       100% {
         opacity: 1;
-        transform: translateY(0);    
+        transform: translateY(0);
       }
     }
 
@@ -257,7 +279,7 @@
       animation: slideInRight 0.8s ease-out forwards;
     }
 
-    
+
     @keyframes slideInBelow {
             0% {
         opacity: 0;
@@ -269,13 +291,21 @@
       }
     }
     .fade-slide-in-below {
-      opacity: 0; 
-      animation-fill-mode: forwards; 
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
 
     .fade-slide-in-below { animation: slideInBelow 0.8s ease-out both; animation-delay: 0.2s; }
 
-
+    @media (max-width:768px){
+      .topbar{padding:10px 14px}
+      .brand{font-size:0.95rem}
+      .brand .initial{padding:6px;font-size:0.85rem}
+      .navlinks{gap:10px}
+      .navlinks a{font-size:13px;padding:6px 8px}
+      .nav-dropdown-btn{padding:6px 12px;font-size:13px}
+      .nav-dropdown-menu{min-width:180px;right:0}
+    }
 
   </style>
 </head>
@@ -288,9 +318,19 @@
         <div>Dominic Saksa</div>
       </div>
       <nav class="navlinks" aria-label="Top navigation">
-        <a href="/files/Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        <a href="mailto:domsaksa5@gmail.com">Email</a>
-        <a href="/index.html">Home</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" id="navDropdownBtn" aria-haspopup="true" aria-expanded="false">Explore &#9662;</button>
+          <div class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+            <a href="../education/index.html" role="menuitem">Education</a>
+            <a href="../work/index.html" role="menuitem">Work Experience</a>
+            <a href="../computer/index.html" role="menuitem">Programming Projects</a>
+            <a href="../arcade/index.html" role="menuitem">Game Development</a>
+            <a href="../themepark/index.html" role="menuitem">Theme Parks</a>
+          </div>
+        </div>
+        <a href="../files/Resume.pdf" target="_blank" rel="noopener" class="nav-plain">Resume</a>
+        <a href="mailto:domsaksa5@gmail.com" class="nav-plain">Email</a>
+        <a href="../index.html" class="nav-plain">Home</a>
       </nav>
     </div>
   </header>
@@ -309,7 +349,7 @@
       <div class="profile-section fade-slide-in-left">
         <div class="profile-pic"><img src="assets/dom.JPG" alt="Dominic Saksa"></div>
         <h3>Dominic Saksa</h3>
-        <p style="font-size: 15px; text-align: left;">Computer Engineering student passionate about the amusement park industry, bringing hardware and software together to solve complex challenges.</p>
+        <p style="font-size: 15px; text-align: left;">Computer Engineering student pursuing a career in software engineering and embedded systems with experience in embedded programming, independent PCB design, and team-based application development.</p>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/dominic-saksa-895165298/" target="_blank" aria-label="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="currentColor">
@@ -327,52 +367,61 @@
 
       <div class="edu-card fade-slide-in-below">
         <h2 id="education-heading" class="edu-title">Education</h2>
-        <div class="edu-meta">Michigan State University — East Lansing, MI • Expected Graduation: May 2027</div>
+        <div class="edu-meta">Michigan State University — East Lansing, MI • August 2023 - Expected May 2027</div>
 
         <div class="edu-list">
             <article class="edu-item" aria-labelledby="msu-degree">
                 <h4 id="msu-degree">B.S. Computer Engineering</h4>
-                <p class="muted">Relevant coursework: Data Structures and Algorithms, Circuit Analysis, Electronic Circuits, Microprocessors and Digital Systems, Object-Oriented Software Design, Intro To Artificial Intelligence</p>
-                <p style="margin-top:8px"><span class="chip">GPA: 3.02</span></p>
+                <p class="muted">Relevant coursework: Data Structures and Algorithms, Circuit Analysis, Electronic Circuits, Microprocessors and Digital Systems, Object-Oriented Software Design, Intro to Artificial Intelligence</p>
+                <p style="margin-top:8px"><span class="chip">GPA: 2.98</span></p>
             </article>
-            
+
             <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">Yonsei Summer Semester Abroad</h4>
-                <p style="margin-top:8px"><span class="chip">Summer 2024</span></p>
+                <h4 id="msu-degree">Yonsei University — Seoul, South Korea</h4>
+                <p style="margin-top:8px"><span class="chip">Summer 2024 — Summer Semester Abroad</span></p>
             </article>
 
             <article class="edu-item" aria-labelledby="projects-heading">
             <h4 id="projects-heading">Selected Academic Projects</h4>
 
             <div class="project-block">
-                <img src="assets/atmMachine (1).png" alt="Theme Park Ride Simulation" class="project-img">
+                <img src="assets/atmMachine (1).png" alt="ATM State Machine" class="project-img">
                 <div class="project-content">
                     <h5>ATM State Machine</h5>
-                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">Verilog</span></p>
+                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">Verilog</span><span class="chip" style="color: #0f1724; background-color: #dddddd;">Vivado</span></p>
                     <br>
-                    <p>Designed and implemented a finite state machine (FSM) in Verilog to control a Spartan Bucks ATM system with checking, savings, deposit, withdrawal, transfer, and bill pay functionality.</p>
+                    <p>Designed a finite state machine controlling an ATM with checking, savings, deposit, withdrawal, transfer, and bill pay functionality.</p>
                     <br>
-                    <p>Interfaced with simulated cash dispenser and touch display modules, handling inputs/outputs including 8-bit account balances, transaction commands, and warning indicators (overflow, insufficient funds).</p>
-                    <br>
-                    <p>Managed I/O constraints and timing using a 100 MHz clock and asynchronous reset for synchronous operation.</p>
+                    <p>Interfaced with simulated hardware using 8-bit balances, transaction commands, and warning indicators on a 100 MHz clock.</p>
                 </div>
             </div>
 
             <div class="project-block">
-                <img src="assets/footballCalendar.png" alt="Theme Park Ride Simulation" class="project-img">
                 <div class="project-content">
-                    <h5>MIT App Inventor | Football Calendar</h5>
-                    <p>Led a group of students to produce a football calendar app which allowed users to look at projected scores, purchase tickets, view team rosters, and keep track of events.</p>
+                    <h5>ALU Project</h5>
+                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">Verilog</span><span class="chip" style="color: #0f1724; background-color: #dddddd;">Vivado</span></p>
                     <br>
-                    <p>Project was created for intro Engineering design class using MIT App Inventor program with visual coding.</p>
+                    <p>Programmed an 8-bit ALU with four logic operators and multiplexer output selection.</p>
+                </div>
+            </div>
+
+            <div class="project-block">
+                <div class="project-content">
+                    <h5>Spartanoid | Object-Oriented Software Design</h5>
+                    <p style="margin-top:8px"><span class="chip" style="color: #0f1724; background-color: #dddddd;">C++</span></p>
+                    <br>
+                    <p>Led a team building a multi-level brick-breaker game with real-time physics, collision detection, and scoring.</p>
+                    <br>
+                    <p>Engineered a polymorphic game object architecture with the Visitor design pattern for heterogeneous object interactions, and XML-based level loading for dynamic configuration.</p>
                 </div>
             </div>
             </article>
 
             <article class="edu-item" aria-labelledby="activities-heading">
-                <h4 id="activities-heading">Activities & Leadership</h4>
-                <p style="margin:6px 0 0">• Member of Triangle engineering fraternity - FIRST Robotics Chair</p>
-                <p style="margin:6px 0 0">• MSU IEEE Branch </p>
+                <h4 id="activities-heading">Leadership & Collaboration</h4>
+                <p style="margin:6px 0 0">• Triangle Fraternity | MSU Chapter — FIRST Robotics Chair</p>
+                <p style="margin:6px 0 0">• IEEE | MSU Branch — Member</p>
+                <p style="margin:6px 0 0">• Talk of the Irish — Founder & Leader: Established and led the Notre Dame Preparatory podcast team to amplify the student voice.</p>
             </article>
 
         </div>
@@ -389,6 +438,26 @@
     Dominic Saksa — Computer Engineering Student
     <p style="font-size: 14px;">domsaksa5@gmail.com</p>
   </footer>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('navDropdownBtn');
+      var menu = document.getElementById('navDropdownMenu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.classList.toggle('show');
+      });
+      document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && e.target !== btn) {
+          menu.classList.remove('show');
+        }
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() { menu.classList.remove('show'); });
+      });
+    })();
+  </script>
 
 </body>
 </html>

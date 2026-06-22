@@ -1,37 +1,51 @@
-// Import THREE.js and necessary modules
-import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
-import { MeshToonMaterial } from "https://cdn.skypack.dev/three@0.129.0";
+/* ================================================================
+   main.js — 3D Portfolio Homepage Logic
+   Dominic Saksa
+   ================================================================ */
 
-// Create scene and camera
+import * as THREE from "three";
+import { OrbitControls } from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+import { MeshToonMaterial } from "three";
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(120, 70, -120); // Example: higher and more centered view
+const container3D = document.getElementById("container3D");
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+function getContainerSize() {
+  const rect = container3D.getBoundingClientRect();
+  return {
+    width: rect.width || window.innerWidth,
+    height: rect.height || window.innerHeight
+  };
+}
+
+const initialSize = getContainerSize();
+const camera = new THREE.PerspectiveCamera(20, initialSize.width / initialSize.height, 0.1, 1000);
+camera.position.set(120, 70, -120);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(initialSize.width, initialSize.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-document.getElementById("container3D").appendChild(renderer.domElement);
+container3D.appendChild(renderer.domElement);
 
-// Orbit Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0, 0);
 controls.update();
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 const clickableObjects = [];
 const meshToModelMap = new Map();
+const loadedModels = new Map();
 
 let originalCameraPos = camera.position.clone();
 let originalControlsTarget = controls.target.clone();
 
-
-// Lighting Setup
 const keyLight = new THREE.DirectionalLight(0xffddaa, 1);
 keyLight.position.set(50, 100, 100);
 keyLight.castShadow = true;
@@ -39,15 +53,12 @@ scene.add(keyLight);
 
 keyLight.shadow.mapSize.width = 2048;
 keyLight.shadow.mapSize.height = 2048;
-
 keyLight.shadow.camera.near = 1;
 keyLight.shadow.camera.far = 200;
-
 keyLight.shadow.camera.left = -100;
 keyLight.shadow.camera.right = 100;
 keyLight.shadow.camera.top = 100;
 keyLight.shadow.camera.bottom = -100;
-
 keyLight.shadow.bias = -0.0005;
 
 const rimLight = new THREE.DirectionalLight(0xccddff, 1.0);
@@ -58,7 +69,6 @@ const ambientLight = new THREE.AmbientLight(0x334455, 0.7);
 ambientLight.position.set(-50, 80, -100);
 scene.add(ambientLight);
 
-// Ground Plane for shadows
 const planeGeometry = new THREE.PlaneGeometry(500, 500);
 const shadowMat = new THREE.ShadowMaterial({ opacity: 0.3 });
 const ground = new THREE.Mesh(planeGeometry, shadowMat);
@@ -67,16 +77,14 @@ ground.position.y = -1;
 ground.receiveShadow = true;
 scene.add(ground);
 
-// Models to load
 const modelsToLoad = [
   { name: 'Office', position: { x: -10, y: -1, z: 17 }, color: 0x8c5b11, scale: 2.7 },
   { name: 'Computer', position: { x: -19, y: -1, z: -5 }, color: 0x8c5b11, scale: 1.5 },
-  { name: 'Arcade', position: { x: 6 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: 3.4 },
-  { name: 'School', position: { x: 20 , y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
+  { name: 'Arcade', position: { x: 6, y: -1.5, z: 15 }, color: 0x8c5b11, scale: 3.4 },
+  { name: 'School', position: { x: 20, y: -1.5, z: 15 }, color: 0x8c5b11, scale: .9 },
   { name: 'Park', position: { x: -15, y: -1, z: -33 }, color: 0x8c5b11, scale: 2.2 },
 ];
 
-// Load all models
 modelsToLoad.forEach((model) => {
   loadModel(model.name, model.position, model.color, model.scale);
 });
@@ -99,7 +107,6 @@ function loadModelInfoFromHTML() {
   return info;
 }
 
-// Load all model info once on app start:
 const modelInfo = loadModelInfoFromHTML();
 
 function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755, scale = 1) {
@@ -115,7 +122,7 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
           model.rotation.y = Math.PI / 2;
         }
         if (modelName === 'School') {
-          model.rotation.y = Math.PI *3 / 2;
+          model.rotation.y = Math.PI * 3 / 2;
         }
 
         model.traverse((node) => {
@@ -123,14 +130,13 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
             node.material = new MeshToonMaterial({ color });
             node.castShadow = true;
             node.receiveShadow = true;
-
             clickableObjects.push(node);
             meshToModelMap.set(node, modelName);
           }
         });
 
         scene.add(model);
-        loadedModels.set(modelName, model); 
+        loadedModels.set(modelName, model);
       },
       undefined,
       (error) => {
@@ -139,55 +145,45 @@ function loadModel(modelName, position = { x: 0, y: 0, z: 0 }, color = 0xff7755,
     );
 }
 
-const loadedModels = new Map();
-
 const birdFlock = new THREE.Group();
 scene.add(birdFlock);
 
-const loader = new GLTFLoader();
+const birdLoader = new GLTFLoader();
 
-loader.load('models/Bird/scene.gltf', (gltf) => {
+birdLoader.load('models/Bird/scene.gltf', (gltf) => {
   const originalBird = gltf.scene;
 
-  // Create multiple birds by cloning
   for (let i = 0; i < 5; i++) {
     const bird = originalBird.clone(true);
-    bird.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
-    // Rotate each bird to face positive X direction (right)
-    bird.rotation.y = Math.PI *3 / 2;
-
+    bird.scale.set(0.5, 0.5, 0.5);
+    bird.rotation.y = Math.PI * 3 / 2;
     bird.position.set(
-      -50 - i * 5,              // Start off left of the scene, spread out horizontally
-      30 + Math.random() * 5,   // Randomize vertical height a bit
-      -20 + Math.random() * 20  // Spread in depth too
+      -50 - i * 5,
+      30 + Math.random() * 5,
+      -20 + Math.random() * 20
     );
     birdFlock.add(bird);
   }
 
-  birdFlock.visible = false; // Start hidden
+  birdFlock.visible = false;
 });
 
-// Animate the flock flying across the sky
 function flyBirds() {
-  if (birdFlock.children.length === 0) return; // Wait for birds to load
+  if (birdFlock.children.length === 0) return;
 
   birdFlock.visible = true;
-  birdFlock.position.set(0, 0, 0); // Reset flock position
+  birdFlock.position.set(0, 0, 0);
 
   gsap.to(birdFlock.position, {
-    x: 120,      // Fly from left to right across your scene
+    x: 120,
     duration: 15,
     ease: "linear",
-    onUpdate: () => {
-      console.log(`Bird position x: ${birdFlock.position.x.toFixed(2)}`);
-    },
     onComplete: () => {
-      birdFlock.visible = false; // Hide when done flying
+      birdFlock.visible = false;
     },
   });
 }
 
-// Fly the flock every 30 seconds
 setInterval(() => {
   flyBirds();
 }, 30000);
@@ -197,7 +193,6 @@ scene.add(cloudGroup);
 
 const cloudLoader = new GLTFLoader();
 cloudLoader.load('models/Clouds/scene.gltf', (gltf) => {
-
   const originalCloud = gltf.scene;
   originalCloud.traverse((node) => {
     if (node.isMesh) {
@@ -211,38 +206,30 @@ cloudLoader.load('models/Clouds/scene.gltf', (gltf) => {
 
   for (let i = 0; i < 2; i++) {
     const cloud = originalCloud.clone(true);
-    
     cloud.scale.setScalar(5 + Math.random());
     cloud.position.set(
       -70 - Math.random() * 5,
       30 + Math.random() * 5,
       80
     );
-
-    cloud.rotation.y = Math.random() * Math.PI * 2; // spin around Y
-    cloud.rotation.x = (Math.random() - 0.5) * 0.2; // small tilt up/down
-    cloud.rotation.z = (Math.random() - 0.5) * 0.2; // small roll
-
+    cloud.rotation.y = Math.random() * Math.PI * 2;
+    cloud.rotation.x = (Math.random() - 0.5) * 0.2;
+    cloud.rotation.z = (Math.random() - 0.5) * 0.2;
     cloudGroup.add(cloud);
-
-    animateCloud(cloud); // Start drifting each cloud
+    animateCloud(cloud);
   }
-
 });
 
 function animateCloud(cloud) {
-  // Move from left to right across the sky
   const startX = cloud.position.x;
   const endX = 150;
-
-  const duration = 60 + Math.random() * 30; // 60–90 seconds
+  const duration = 60 + Math.random() * 30;
 
   gsap.to(cloud.position, {
     x: endX,
     duration: duration,
     ease: "none",
     onComplete: () => {
-      // Reset and repeat
       cloud.position.x = -100 - Math.random() * 50;
       cloud.position.y = 40 + Math.random() * 20;
       animateCloud(cloud);
@@ -256,13 +243,14 @@ let currentHovered = null;
 window.addEventListener('mousemove', onMouseMove, false);
 
 function onMouseMove(event) {
-  if (currentlyClicked == true)
-  {
+  if (currentlyClicked == true) {
     return;
   }
 
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  const canvas = renderer.domElement;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(clickableObjects);
@@ -272,13 +260,11 @@ function onMouseMove(event) {
 
     label.style.display = 'block';
     label.textContent = modelInfo[meshToModelMap.get(hoveredMesh)]?.title || 'Unknown';
-
     label.style.left = `${event.clientX + 10}px`;
     label.style.top = `${event.clientY + 10}px`;
 
     if (currentHovered !== hoveredMesh) {
       if (currentHovered) {
-        // Restore old color
         gsap.to(currentHovered.material.color, {
           r: currentHovered.userData.originalColor.r,
           g: currentHovered.userData.originalColor.g,
@@ -286,13 +272,12 @@ function onMouseMove(event) {
           duration: 0.5,
         });
         gsap.to(currentHovered.position, {
-          y: currentHovered.userData.originalY ?? 0, // restore to original
+          y: currentHovered.userData.originalY ?? 0,
           duration: 0.3,
           ease: "power2.out"
         });
       }
 
-      // Save the hovered mesh and its original color
       currentHovered = hoveredMesh;
 
       if (!currentHovered.userData.originalColor) {
@@ -302,7 +287,6 @@ function onMouseMove(event) {
         currentHovered.userData.originalY = currentHovered.position.y;
       }
 
-      // Animate to highlight color (e.g., yellow)
       gsap.to(currentHovered.material.color, {
         r: 0.2,
         g: 0.2,
@@ -311,7 +295,7 @@ function onMouseMove(event) {
       });
 
       gsap.to(currentHovered.position, {
-        y: currentHovered.userData.originalY + 1.0, // lift by 1 unit
+        y: currentHovered.userData.originalY + 1.0,
         duration: 0.3,
         ease: "power2.out"
       });
@@ -320,7 +304,6 @@ function onMouseMove(event) {
     document.body.style.cursor = 'pointer';
   } else {
     label.style.display = 'none';
-    // Reset color if nothing is hovered
     if (currentHovered) {
       gsap.to(currentHovered.material.color, {
         r: currentHovered.userData.originalColor.r,
@@ -341,12 +324,8 @@ function onMouseMove(event) {
 }
 
 function handleModelSelection(modelName) {
-  console.log(`Model selected: ${modelName}`);
-  
-  // Zoom to model
   zoomToModel(modelName);
 
-  // Show info panel and load content
   switch (modelName) {
       case "Arcade":
         window.location.href = "arcade/index.html";
@@ -354,7 +333,6 @@ function handleModelSelection(modelName) {
       case "School":
         window.location.href = "education/index.html";
         break;
-        
       case "Computer":
         window.location.href = "computer/index.html";
         break;
@@ -365,7 +343,6 @@ function handleModelSelection(modelName) {
         window.location.href = "themepark/index.html";
         break;
       default:
-
         return;
   }
 }
@@ -380,11 +357,9 @@ gsap.to(camera, {
   onUpdate: () => camera.updateProjectionMatrix()
 });
 
-
 function zoomToModel(modelName) {
   const model = loadedModels.get(modelName);
   if (!model) {
-    console.warn(`Model ${modelName} not found.`);
     return;
   }
 
@@ -399,25 +374,23 @@ function zoomToModel(modelName) {
       newCameraPosition = new THREE.Vector3(80.93, 29.41, -32.02);
       newCameraTarget = new THREE.Vector3(25.34, -3.02, 23.58);
       break;
-      
     case "Computer":
       newCameraPosition = new THREE.Vector3(30.98, 30.30, -57.32);
       newCameraTarget = new THREE.Vector3(-14.31, 3.88, -12.04);
       break;
     case "Office":
-      newCameraPosition = new THREE.Vector3(35.14, 29.13, -29.87 );
+      newCameraPosition = new THREE.Vector3(35.14, 29.13, -29.87);
       newCameraTarget = new THREE.Vector3(0.10, 8.69, 5.17);
       break;
     case "Park":
-      newCameraPosition = new THREE.Vector3(37.64, 33.64, -86.90 );
+      newCameraPosition = new THREE.Vector3(37.64, 33.64, -86.90);
       newCameraTarget = new THREE.Vector3(-23.96, -2.29, -25.30);
       break;
     default:
-      console.warn(`No camera position defined for model: ${modelName}`);
       return;
   }
 
-  const duration = 1000; // ms
+  const duration = 1000;
   const startTime = performance.now();
   const startPos = camera.position.clone();
 
@@ -427,7 +400,6 @@ function zoomToModel(modelName) {
 
     camera.position.lerpVectors(startPos, newCameraPosition, t);
     controls.target.lerpVectors(originalControlsTarget, newCameraTarget, t);
-
     controls.update();
 
     if (t < 1) {
@@ -455,7 +427,6 @@ function resetCamera() {
     if (t < 1) {
       requestAnimationFrame(animateReset);
     } else {
-      // Animation finished here:
       currentlyClicked = false;
     }
   }
@@ -463,21 +434,21 @@ function resetCamera() {
   requestAnimationFrame(animateReset);
 }
 
-
-// Handle window resizing
 window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const size = getContainerSize();
+  camera.aspect = size.width / size.height;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(size.width, size.height);
 });
 
-// Handle clicks (desktop) and taps (mobile)
 window.addEventListener('click', onClick, false);
+
 window.addEventListener('touchend', (event) => {
-  // Normalize touch coordinates
   const touch = event.changedTouches[0];
-  mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+  const canvas = renderer.domElement;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(clickableObjects);
@@ -492,12 +463,14 @@ window.addEventListener('touchend', (event) => {
 const label = document.getElementById('hoverLabel');
 
 function onClick(event) {
-  if (currentlyClicked == true)
-  {
+  if (currentlyClicked == true) {
     return;
   }
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+  const canvas = renderer.domElement;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(clickableObjects);
@@ -511,8 +484,8 @@ function onClick(event) {
 
 document.getElementById('closeInfo').addEventListener('click', () => {
   document.getElementById('infoPanel').style.display = 'none';
-  controls.enabled = true;    // Enable orbit controls
-  resetCamera(); // 👈 Go back to original view
+  controls.enabled = true;
+  resetCamera();
 });
 
 document.querySelectorAll('#infoNav a').forEach(link => {
@@ -547,22 +520,14 @@ function updateActiveLink() {
   });
 }
 
-document.getElementById('infoDescription').addEventListener('scroll', updateActiveLink);
+const infoDesc = document.getElementById('infoDescription');
+if (infoDesc) {
+  infoDesc.addEventListener('scroll', updateActiveLink);
+}
 
-/*
- window.addEventListener('click', () => {
-   const pos = camera.position;
-   const tgt = controls.target;
-   console.log(`Camera position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
-   console.log(`Camera target: ${tgt.x.toFixed(2)}, ${tgt.y.toFixed(2)}, ${tgt.z.toFixed(2)}`);
-
-});
-*/
-
-
-// Animate and render loop
 function animate() {
   requestAnimationFrame(animate);
+  controls.update();
   renderer.render(scene, camera);
 }
 animate();

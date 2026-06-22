@@ -1,38 +1,56 @@
 <!DOCTYPE html>
-<html>
+<!-- ================================================================
+     index.html — 3D Portfolio Homepage
+     Dominic Saksa
+     ================================================================ -->
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Dominic Saksa Mind Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Dominic Saksa | Portfolio</title>
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Oswald&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
 </head>
 <body>
   <div class="layout">
-    <!-- Top Bar -->
     <header class="top-bar">
       <h1>Dominic Saksa</h1>
       <nav class="top-links">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" id="navDropdownBtn" aria-haspopup="true" aria-expanded="false">Explore &#9662;</button>
+          <div class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+            <a href="education/index.html" role="menuitem">Education</a>
+            <a href="work/index.html" role="menuitem">Work Experience</a>
+            <a href="computer/index.html" role="menuitem">Programming Projects</a>
+            <a href="arcade/index.html" role="menuitem">Game Development</a>
+            <a href="themepark/index.html" role="menuitem">Theme Parks</a>
+          </div>
+        </div>
         <a href="mailto:domsaksa5@gmail.com" target="_blank" rel="noopener noreferrer">Email Me</a>
         <a href="files/Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </header>
 
-
     <div class="main">
       <div id="hoverLabel" style="display: none;"></div>
 
-      <!-- Center 3D Canvas -->
       <div class="center">
       <div id="container3D"></div>
         <div id="welcomeMessage">
           <h1 style="text-align: center; margin-bottom: 10px;">Welcome</h1>
-          <p>This is an interactive 3D portfoilio.</p>
+          <p>This is an interactive 3D portfolio.</p>
           <p>Click or tap on an island to explore that topic.</p>
-          <p>Use the <b>Home</b> button at the top to return here at any time.</p>
+          <p>Use the <b>Explore</b> menu at the top to navigate to any page.</p>
         </div>
 
-        <!-- Info Panel -->
         <div id="infoPanel">
           <nav id="infoNav">
             <a href="#" data-model="School">Education</a>
@@ -40,7 +58,7 @@
             <a href="#" data-model="Office">Work Experience</a>
             <a href="#" data-model="Computer">Programming Projects</a>
             <a href="#" data-model="Park">Theme Parks</a>
-          </nav>  
+          </nav>
           <p id="infoDescription"></p>
           <button id="closeInfo">X</button>
         </div>
@@ -50,26 +68,41 @@
 
   <script type="module" src="js/main.js"></script>
 
+  <script>
+    (function() {
+      var btn = document.getElementById('navDropdownBtn');
+      var menu = document.getElementById('navDropdownMenu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var isOpen = menu.classList.contains('show');
+        menu.classList.toggle('show');
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && e.target !== btn) {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+  </script>
+
   <div id="modelData" style="display: none;">
-    <div id="Park" data-title="Theme Parks">
-      
-    </div>
-
-    <div id="Office" data-title="Work Experience">
-
-    </div>
-
-    <div id="Computer" data-title="Programming Projects">
-
-    </div>
-
-    <div id="Arcade" data-title="Game Development">
-      
-    </div>
-
-    <div id="School" data-title="Education">
-     
-    </div>
+    <div id="Park" data-title="Theme Parks"></div>
+    <div id="Office" data-title="Work Experience"></div>
+    <div id="Computer" data-title="Programming Projects"></div>
+    <div id="Arcade" data-title="Game Development"></div>
+    <div id="School" data-title="Education"></div>
   </div>
 
 </body>

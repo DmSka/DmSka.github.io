@@ -1,4 +1,8 @@
-/* General Reset */
+/* ================================================================
+   style.css — Homepage Stylesheet
+   Dominic Saksa
+   ================================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
@@ -24,15 +28,14 @@ html, body {
   overflow: hidden;
 }
 
-  body {
-    font-family: 'Arvo', serif;
-  }
+body {
+  font-family: 'Arvo', serif;
+}
 
-  h1, h2, h3, h4, h5 {
-    font-family: 'Montserrat', sans-serif;
-  }
+h1, h2, h3, h4, h5 {
+  font-family: 'Montserrat', sans-serif;
+}
 
-/* Layout Container */
 .layout {
   display: flex;
   flex-direction: column;
@@ -40,15 +43,16 @@ html, body {
   width: 100vw;
 }
 
-/* Top Bar */
 .top-bar {
   height: 10%;
+  min-height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes title left, links right */
+  justify-content: space-between;
   padding: 10px 20px;
   background-color: var(--white-color);
   color: var(--green-color);
+  z-index: 50;
 }
 
 .title-group {
@@ -58,7 +62,8 @@ html, body {
 
 .top-links {
   display: flex;
-  gap: 20px; /* spacing between links */
+  gap: 20px;
+  align-items: center;
 }
 
 .top-links a {
@@ -72,14 +77,68 @@ html, body {
   color: black
 }
 
-/* Main Area */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-btn {
+  background: var(--orange-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Arvo', 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-dropdown-btn:hover {
+  background: #f9c45a;
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 220px;
+  background: white;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  padding: 8px 0;
+  z-index: 200;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.nav-dropdown-menu.show {
+  display: block;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 18px;
+  color: var(--green-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--yellow-color);
+  color: black;
+}
+
 .main {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
-/* Sidebar Styling */
 .sidebar {
   width: 220px;
   background-color: var(--white-color);
@@ -93,37 +152,39 @@ html, body {
   border-left: 1px solid var(--white-color);
 }
 
-/* Center 3D Area */
 .center {
   flex: 1;
   position: relative;
 }
 
-/* 3D Canvas Fills Center Area */
 #container3D {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-/* Info Panel Styling */
+#container3D canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 #infoPanel {
   position: fixed;
   top: 0;
-  left: 0; /* Cover from the far left */
-  width: 100%; /* Full viewport width */
-  height: 100%; /* Full viewport height */
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 15px;
-  background: rgba(0, 0, 0, 0.9); /* Optional: make it a bit darker for full-screen effect */
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   font-size: 16px;
-  border-radius: 0; /* No rounded edges for full screen */
+  border-radius: 0;
   display: none;
   z-index: 100;
-  box-shadow: none; /* Shadow not necessary if full screen, optional */
-  overflow-y: auto; /* Scroll if content too tall */
+  box-shadow: none;
+  overflow-y: auto;
 }
-
 
 #infoPanel h2 {
   margin-bottom: 10px;
@@ -144,7 +205,7 @@ html, body {
   font-size: 28px;
   color: black;
   cursor: pointer;
-  z-index: 101; /* Ensure it's above content */
+  z-index: 101;
   border-radius: 25px;
   transition: color 0.2s ease;
 }
@@ -157,19 +218,16 @@ html, body {
   width: 10px;
 }
 
-/* Track */
 .scroll-box::-webkit-scrollbar-track {
   background: gray
 }
- 
-/* Handle */
+
 .scroll-box::-webkit-scrollbar-thumb {
   background: var(--orange-color);
 }
 
-/* Handle on hover */
 .scroll-box::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 #hoverLabel {
@@ -185,72 +243,72 @@ html, body {
   transition: opacity 0.2s ease;
 }
 
-  #education-section {
-    height: 80%;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-  }
+#education-section {
+  height: 80%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
 
-  .education-container {
-    display: flex;
-    flex: 1;
-    gap: 40px;
-  }
+.education-container {
+  display: flex;
+  flex: 1;
+  gap: 40px;
+}
 
- .html-box {
-    background-color: #1e1e1e;
-    border-left: 5px solid var(--orange-color);
-    padding: 20px 25px;
-    margin: 20px auto;
-    max-width: 600px;
-    border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--white-color);
-    font-family: 'Arvo', 'Oswald', sans-serif;
-    margin-bottom: 1rem;
-  }
+.html-box {
+  background-color: #1e1e1e;
+  border-left: 5px solid var(--orange-color);
+  padding: 20px 25px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--white-color);
+  font-family: 'Arvo', 'Oswald', sans-serif;
+  margin-bottom: 1rem;
+}
 
-  .html-box h3 {
-    margin-top: 0;
-    font-size: 1.6rem;
-    color: var(--white-color);
-    font-style: italic;
-    border-bottom: 1px solid var(--white-color);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-  }
+.html-box h3 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: var(--white-color);
+  font-style: italic;
+  border-bottom: 1px solid var(--white-color);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
 
-  .html-box p {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #ccc;
-  }
+.html-box p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ccc;
+}
 
-  .html-box em {
-    font-style: italic;
-    color: #aaa;
-  }
+.html-box em {
+  font-style: italic;
+  color: #aaa;
+}
 
+.columns {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
   .columns {
-    display: flex;
-    gap: 40px;
-    padding: 20px;
-  }
-
-  .column {
-    flex: 1;
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
-
-  @media (max-width: 768px) {
-    .columns {
-      flex-direction: column;
-    }
-  }
+}
 
 .slide-in-left {
   animation: slideInFromLeft 0.8s ease-out forwards;
@@ -261,36 +319,18 @@ html, body {
 }
 
 @keyframes slideInFromLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideInFromBottom {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 #infoNav {
@@ -309,7 +349,7 @@ html, body {
 }
 
 #infoNav a:hover {
-  color: var(--orange-color); /* light green or any hover color you prefer */
+  color: var(--orange-color);
 }
 
 #infoNav a.active {
@@ -323,8 +363,8 @@ html, body {
   display: flex;
   flex-wrap: nowrap;
   gap: 40px;
-  overflow-x: auto;          /* Enable horizontal scroll */
-  overflow-y: hidden;        /* Prevent vertical scroll */
+  overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   padding: 20px;
 }
@@ -363,9 +403,8 @@ html, body {
   border: 4px solid transparent;
 }
 
-
 .tile:hover .tile-img {
-  width: 92%; 
+  width: 92%;
   border: 4px solid var(--orange-color);
 }
 
@@ -392,7 +431,7 @@ html, body {
   color: black;
   transition: background-color 0.3s ease;
   width: 70%;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 #welcomeMessage {
@@ -408,12 +447,11 @@ html, body {
   max-width: 700px;
   text-align: center;
   z-index: 10;
-  opacity: 0; 
-  animation: fadeInScale 1.5s ease-out forwards; 
+  opacity: 0;
+  animation: fadeInScale 1.5s ease-out forwards;
   animation-delay: 1.8s;
 }
 
-/* Animation keyframes */
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -425,4 +463,95 @@ html, body {
   }
 }
 
+@media (max-width: 1100px) {
+  .top-bar {
+    padding: 10px 16px;
+  }
+  .top-bar h1 {
+    font-size: 1.3rem;
+  }
+  #infoNav {
+    gap: 1.2rem;
+    font-size: 15px;
+    flex-wrap: wrap;
+  }
+  #welcomeMessage {
+    font-size: 15px;
+    line-height: 28px;
+    max-width: 500px;
+    padding: 16px 22px;
+  }
+}
 
+@media (max-width: 768px) {
+  .top-bar {
+    min-height: 54px;
+    padding: 8px 12px;
+    height: auto;
+  }
+  .top-bar h1 {
+    font-size: 1.1rem;
+  }
+  .top-links {
+    gap: 10px;
+  }
+  .top-links a {
+    font-size: 13px;
+  }
+  .nav-dropdown-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  .nav-dropdown-menu {
+    min-width: 180px;
+  }
+  #welcomeMessage {
+    font-size: 14px;
+    line-height: 24px;
+    max-width: 320px;
+    padding: 14px 18px;
+    bottom: 40px;
+  }
+  #welcomeMessage h1 {
+    font-size: 1.3rem;
+  }
+  #infoNav {
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 14px;
+    padding: 10px;
+  }
+  #hoverLabel {
+    font-size: 16pt;
+    padding: 4px 8px;
+  }
+  #closeInfo {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-bar h1 {
+    font-size: 1rem;
+  }
+  .top-links a {
+    font-size: 12px;
+  }
+  .nav-dropdown-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  #welcomeMessage {
+    font-size: 13px;
+    max-width: 280px;
+    padding: 12px 14px;
+    line-height: 20px;
+  }
+  #welcomeMessage h1 {
+    font-size: 1.1rem;
+  }
+}

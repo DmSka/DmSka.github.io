@@ -1,12 +1,16 @@
+<!-- ================================================================ -->
+<!-- work/index.html — Work Experience Page -->
+<!-- Dominic Saksa -->
+<!-- ================================================================ -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dominic Saksa — Work Experience | CS Portfolio</title>
+  <title>Dominic Saksa — Work Experience | Portfolio</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Computer Science portfolio — Work page">
+  <meta name="description" content="Computer Engineering portfolio — Work page">
   <style>
     :root{
       --accent:#EDAE49;
@@ -31,9 +35,17 @@
     .brand{color:#0f1724;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:12px}
     .brand .initial{background:var(--accent);color:white;padding:8px;border-radius:8px}
 
-    .navlinks{display:flex;gap:18px}
+    .navlinks{display:flex;gap:18px;align-items:center}
     .navlinks a{color:#0f1724;text-decoration:none;font-weight:600;background:transparent;padding:8px 12px;border-radius:10px}
     .navlinks a:hover{background:rgba(0,0,0,0.05)}
+
+    .nav-dropdown{position:relative;display:inline-block}
+    .nav-dropdown-btn{background:var(--accent);color:white;border:none;padding:8px 16px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background 0.2s ease;white-space:nowrap}
+    .nav-dropdown-btn:hover{background:#f9c45a}
+    .nav-dropdown-menu{display:none;position:absolute;top:100%;right:0;min-width:220px;background:white;box-shadow:0 8px 24px rgba(0,0,0,0.15);border-radius:10px;padding:8px 0;z-index:200;border:1px solid rgba(0,0,0,0.08)}
+    .nav-dropdown-menu.show{display:block}
+    .nav-dropdown-menu a{display:block;padding:10px 18px;color:#3A4F41;text-decoration:none;font-weight:600;font-size:14px;transition:background 0.2s ease,color 0.2s ease}
+    .nav-dropdown-menu a:hover{background:#F9DF74;color:black}
 
     .hero{
       min-height:50vh;
@@ -85,7 +97,7 @@
     .social-links {
       display: flex;
       justify-content: center;
-      gap: 31px; 
+      gap: 31px;
       margin-top: 12px;
       flex-wrap: wrap;
     }
@@ -96,7 +108,7 @@
       justify-content: center;
       background: var(--accent);
       border-radius: 50%;
-      width: 40px;  
+      width: 40px;
       height: 40px;
       text-decoration: none;
       transition: transform 0.2s ease, background 0.2s ease;
@@ -110,7 +122,7 @@
 
     .social-links a:hover {
       transform: scale(1.2);
-      background: #0f1724; 
+      background: #0f1724;
     }
 
     .edu-card{background:var(--card-bg);padding:24px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(2,6,23,0.08)}
@@ -121,15 +133,15 @@
       padding:12px;
       border-radius:10px;
       border:1px solid rgba(15,23,36,0.04);
-      transition: 
-        background 0.3s ease, 
-        transform 0.3s ease, 
+      transition:
+        background 0.3s ease,
+        transform 0.3s ease,
         box-shadow 0.3s ease;
       }
     .edu-item:hover{
       background: #f0f0f0;
-      transform: scale(1.01); 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      transform: scale(1.01);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       cursor: pointer;
     }
     .edu-item h4{margin:0;font-size:1rem}
@@ -141,14 +153,14 @@
     .chip{display:inline-block;background:#f3f4f6;padding:6px 10px;border-radius:999px;font-weight:600}
     .chip:hover{
         background: #fcd285;
-        transform: scale(1.05); 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       }
 
     @media (max-width:1100px){
       .education-section{grid-template-columns:1fr;}
       .hero-content{flex-direction:column;align-items:flex-start;margin-top:20px}
-      .navlinks{display:none}
+      .navlinks .nav-plain{display:none}
     }
 
     .project-block {
@@ -162,9 +174,9 @@
     }
 
     .project-block img.project-img {
-    width: 300px;  
-    height: 300px;     
-    object-fit: cover; 
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
     border-radius: 8px;
     }
 
@@ -203,9 +215,9 @@
     }
 
     .project-link:hover {
-      background: #f9c45a; 
-      transform: scale(1.05); 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      background: #f9c45a;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
 
@@ -216,11 +228,11 @@
     @keyframes slideIn {
       0% {
         opacity: 0;
-        transform: translateY(30px); 
+        transform: translateY(30px);
       }
       100% {
         opacity: 1;
-        transform: translateY(0);    
+        transform: translateY(0);
       }
     }
 
@@ -256,7 +268,7 @@
       animation: slideInRight 0.8s ease-out forwards;
     }
 
-    
+
     @keyframes slideInBelow {
             0% {
         opacity: 0;
@@ -268,13 +280,21 @@
       }
     }
     .fade-slide-in-below {
-      opacity: 0; 
-      animation-fill-mode: forwards; 
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
 
     .fade-slide-in-below { animation: slideInBelow 0.8s ease-out both; animation-delay: 0.2s; }
 
-
+    @media (max-width:768px){
+      .topbar{padding:10px 14px}
+      .brand{font-size:0.95rem}
+      .brand .initial{padding:6px;font-size:0.85rem}
+      .navlinks{gap:10px}
+      .navlinks a{font-size:13px;padding:6px 8px}
+      .nav-dropdown-btn{padding:6px 12px;font-size:13px}
+      .nav-dropdown-menu{min-width:180px;right:0}
+    }
 
   </style>
 </head>
@@ -287,9 +307,19 @@
         <div>Dominic Saksa</div>
       </div>
       <nav class="navlinks" aria-label="Top navigation">
-        <a href="/files/Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        <a href="mailto:domsaksa5@gmail.com">Email</a>
-        <a href="/index.html">Home</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" id="navDropdownBtn" aria-haspopup="true" aria-expanded="false">Explore &#9662;</button>
+          <div class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+            <a href="../education/index.html" role="menuitem">Education</a>
+            <a href="../work/index.html" role="menuitem">Work Experience</a>
+            <a href="../computer/index.html" role="menuitem">Programming Projects</a>
+            <a href="../arcade/index.html" role="menuitem">Game Development</a>
+            <a href="../themepark/index.html" role="menuitem">Theme Parks</a>
+          </div>
+        </div>
+        <a href="../files/Resume.pdf" target="_blank" rel="noopener" class="nav-plain">Resume</a>
+        <a href="mailto:domsaksa5@gmail.com" class="nav-plain">Email</a>
+        <a href="../index.html" class="nav-plain">Home</a>
       </nav>
     </div>
   </header>
@@ -307,7 +337,7 @@
       <div class="profile-section fade-slide-in-left">
         <div class="profile-pic"><img src="assets/dom.JPG" alt="Dominic Saksa"></div>
         <h3>Dominic Saksa</h3>
-        <p style="font-size: 15px; text-align: left;">Computer Engineering student passionate about the amusement park industry, bringing hardware and software together to solve complex challenges.</p>
+        <p style="font-size: 15px; text-align: left;">Computer Engineering student pursuing a career in software engineering and embedded systems with experience in embedded programming, independent PCB design, and team-based application development.</p>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/dominic-saksa-895165298/" target="_blank" aria-label="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="currentColor">
@@ -328,20 +358,28 @@
 
         <div class="edu-list">
             <article class="edu-item" aria-labelledby="msu-degree">
-                <h4 id="msu-degree">BI Worldwide • June 2025 - Current</h4>
-                <p style="margin-top:8px"><span class="chip">Junior Developer</span></p>
-                <p style="margin-top:8px">Developed responsive HTML email campaigns in VS Code for Metro Detroit automotive dealerships, converting PDF templates into StrongMail-ready packages that informed clients about employee incentives. </p>
+                <h4 id="msu-degree">Bloxide | Context Engineering Intern — May 2026 - Current</h4>
+                <p style="margin-top:8px"><span class="chip">AI Agent Evaluation</span></p>
+                <p style="margin-top:8px">Evaluated and benchmarked AI agent stacks (Kimi K2P6/K2P7, OpenClaw, OpenCode, Hermes) across speed, accuracy, oversight, and task completion to select the optimal internal development stack.</p>
                 <br>
-                <p style="margin-top:8px">Applied responsive design best practices to ensure compatibility across major email clients and devices. </p>
+                <p style="margin-top:8px">Deployed Hermes Agent on a remote Linux server via Tailscale mesh VPN with Fireworks AI inference, and built a four-stage Rust CLI pipeline generating daily DFM/DFA content from IPC-2221/2222 sources with JSONL audit traceability via scheduled cron jobs.</p>
                 <br>
-                <p style="margin-top:8px">Collaborated with account teams to align designs with brand guidelines and client objectives.</p>
+                <p style="margin-top:8px">Designed a battery-powered smart plant watering system using a Beagle Connect Zepto (TI MSPM0) with a custom PCB power board in KiCad, Rust embedded state machine, and WiFi/BLE telemetry.</p>
+            </article>
+
+            <article class="edu-item" aria-labelledby="msu-degree">
+                <h4 id="msu-degree">BI Worldwide | Junior Developer — June 2025 - Current</h4>
+                <p style="margin-top:8px"><span class="chip">Responsive HTML Email</span></p>
+                <p style="margin-top:8px">Developed responsive HTML email campaigns for Metro Detroit automotive dealerships, converting PDF templates into StrongMail-ready packages for employee incentive communications.</p>
+                <br>
+                <p style="margin-top:8px">Applied responsive design across major email clients and collaborated with account teams to align with brand guidelines.</p>
             </article>
 
         </div>
       </div>
 
-      <aside class="msu-photo fade-slide-in-right" aria-label="MSU campus photo">
-        <img src="assets/SideView.jpg" alt="beaumont-tower-2021">
+      <aside class="msu-photo fade-slide-in-right" aria-label="Work photo">
+        <img src="assets/SideView.jpg" alt="Work experience">
       </aside>
 
     </section>
@@ -351,6 +389,26 @@
     Dominic Saksa — Computer Engineering Student
     <p style="font-size: 14px;">domsaksa5@gmail.com</p>
   </footer>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('navDropdownBtn');
+      var menu = document.getElementById('navDropdownMenu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.classList.toggle('show');
+      });
+      document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && e.target !== btn) {
+          menu.classList.remove('show');
+        }
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() { menu.classList.remove('show'); });
+      });
+    })();
+  </script>
 
 </body>
 </html>
